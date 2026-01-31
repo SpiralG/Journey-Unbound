@@ -80,7 +80,7 @@ input  { font-family: inherit; }
 /* ─── HEADER ───────────────────────────────────────────────────────── */
 #header {
   background: linear-gradient(135deg, var(--purple), var(--deep-blue));
-  padding: 14px 18px; position: sticky; top: 0; z-index: 10;
+  padding: 14px 18px; position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   gap: 8px; flex-wrap: wrap;
 }
@@ -100,7 +100,7 @@ input  { font-family: inherit; }
 /* ─── CATEGORY NAV ─────────────────────────────────────────────────── */
 #cat-nav {
   background: #fff; border-bottom: 1px solid var(--border);
-  overflow-x: auto; position: sticky; top: 52px; z-index: 9;
+  overflow-x: auto; position: sticky; top: 52px; z-index: 90;
   -webkit-overflow-scrolling: touch;
 }
 #cat-nav .nav-inner { max-width: 860px; margin: 0 auto; display: flex; gap: 5px; padding: 10px 14px; }
@@ -120,7 +120,7 @@ input  { font-family: inherit; }
 
 /* ─── STICKY LEGEND ────────────────────────────────────────────────── */
 #legend-sticky {
-  position: sticky; top: 96px; z-index: 8;
+  position: sticky; top: 96px; z-index: 80;
   background: #fff;
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
@@ -195,14 +195,14 @@ input  { font-family: inherit; }
   background: var(--deep-blue); color: #fff; font-size: 11px; line-height: 1.5;
   padding: 8px 11px; border-radius: 7px; max-width: 260px; width: max-content;
   z-index: 50; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  pointer-events: none;
+  pointer-events: auto;
 }
 .tooltip::before {
   content: ''; position: absolute; top: -5px; left: 16px;
   width: 10px; height: 10px; background: var(--deep-blue);
   transform: rotate(45deg);
 }
-.item-name-wrap:hover .tooltip { display: block; }
+.item-name.has-tip.show-tip + .tooltip { display: block; }
 /* keep tooltip on screen if near right edge */
 @media (max-width: 500px) { .tooltip { max-width: 200px; } }
 
@@ -426,7 +426,7 @@ input  { font-family: inherit; }
   <div class="desc-card" id="desc-card"></div>
   <div class="filter-row" id="filter-row"></div>
   <div id="items-container"></div>
-  <div class="blessing">💜 Your journey is yours alone. Embrace your power.</div>
+  <div class="blessing">💜 Love Yourself, Your Journey Is Precious, Embrace Your Power</div>
 </div>
 
 <div id="all-items-view" style="display:none">
@@ -464,7 +464,7 @@ input  { font-family: inherit; }
   </div>
   <div class="print-legend" id="print-legend"></div>
   <div id="print-body"></div>
-  <div class="print-blessing">💜 Your journey is yours alone. Embrace your power.</div>
+  <div class="print-blessing">💜 Love Yourself, Your Journey Is Precious, Embrace Your Power</div>
 </div>
 
 <!-- ═══ JS ══════════════════════════════════════════════════════════════════ -->
@@ -689,6 +689,7 @@ const DATA = {
       {name:"Scratching (giving)",group:"Soft Sensation"},
       {name:"Biting – gentle",group:"Soft Sensation"},
       {name:"Biting – intense",group:"Intense Sensation"},
+      {name:"Branding",group:"Intense Sensation"},
       {name:"Ice / temperature play (cold)",group:"Intense Sensation"},
       {name:"Heat play (warm wax, warming oils)",group:"Intense Sensation"},
       {name:"Hot wax dripping",group:"Intense Sensation"},
@@ -706,7 +707,10 @@ const DATA = {
     description:"Communication is the heartbeat of healthy kink. These aren’t just activities — they’re the skills that make everything else possible and safe.",
     items:[
       {name:"Eye contact during intimacy",group:"Core Connection"},
+      {name:"Flirting",group:"Core Connection"},
       {name:"Verbal affirmation and praise",group:"Core Connection"},
+      {name:"Massages (giving)",group:"Core Connection"},
+      {name:"Massages (receiving)",group:"Core Connection"},
       {name:"Dirty talk",group:"Core Connection"},
       {name:"Expressing desires out loud",group:"Core Connection"},
       {name:"Active listening",group:"Core Connection"},
@@ -731,10 +735,17 @@ const DATA = {
       {name:"Following another’s lead",group:"Foundational"},
       {name:"Receiving commands",group:"Foundational"},
       {name:"Giving commands",group:"Foundational"},
+      {name:"Submission (general)",group:"Foundational"},
+      {name:"Domination (general)",group:"Foundational"},
+      {name:"Discipline",group:"Foundational"},
+      {name:"Begging",group:"Foundational"},
       {name:"Switching roles mid-scene",group:"Foundational"},
       {name:"Service acts (non-sexual)",group:"Deeper Exchange"},
       {name:"Acts of care and nurturing",group:"Deeper Exchange"},
       {name:"Protocol and ritual",group:"Deeper Exchange"},
+      {name:"Humiliation",group:"Deeper Exchange"},
+      {name:"Degradation",group:"Deeper Exchange"},
+      {name:"Teasing",group:"Deeper Exchange"},
       {name:"Orgasm control / denial",group:"Deeper Exchange"},
       {name:"Financial domination",group:"Deeper Exchange"},
       {name:"Chastity play",group:"Deeper Exchange"},
@@ -840,6 +851,164 @@ const DATA = {
       {name:"Tantric practices",group:"Spiritual"},
       {name:"Ecstatic / trance states",group:"Spiritual"},
       {name:"Hypnosis / guided trance",group:"Spiritual"},
+    ]
+  },
+  "Sexual Activities": {
+    icon:"🔥",
+    description:"Exploring the full spectrum of sexual expression — from tender intimacy to raw passion. Every act here is valid when it's consensual, communicated, and desired by all involved.",
+    items:[
+      {name:"Kissing",group:"Intimacy"},
+      {name:"Making out",group:"Intimacy"},
+      {name:"Cuddling",group:"Intimacy"},
+      {name:"Cuddling Naked",group:"Intimacy"},
+      {name:"Snuggling",group:"Intimacy"},
+      {name:"Morning Sex",group:"Intimacy"},
+      {name:"Waking up to oral sex",group:"Intimacy"},
+      {name:"Showering Together",group:"Intimacy"},
+      {name:"Mutual Masturbation",group:"Intimacy"},
+      {name:"Oral Sex (giving)",group:"Oral"},
+      {name:"Oral Sex (receiving)",group:"Oral"},
+      {name:"Blow Jobs",group:"Oral"},
+      {name:"Cocksucking",group:"Oral"},
+      {name:"Deep Throating",group:"Oral"},
+      {name:"Face Fucking",group:"Oral"},
+      {name:"Gagging/Choked by Cock",group:"Oral"},
+      {name:"Eating Pussy",group:"Oral"},
+      {name:"Cunnilingus",group:"Oral"},
+      {name:"Pussy Worship",group:"Oral"},
+      {name:"Rimming",group:"Oral"},
+      {name:"69 position",group:"Oral"},
+      {name:"Anal",group:"Anal"},
+      {name:"Anal Sex",group:"Anal"},
+      {name:"Anal play / fingering",group:"Anal"},
+      {name:"Ass Play",group:"Anal"},
+      {name:"Pegging",group:"Anal"},
+      {name:"Vaginal Sex",group:"Penetration"},
+      {name:"Fingering",group:"Penetration"},
+      {name:"Doggy Style",group:"Penetration"},
+      {name:"Rough Sex",group:"Penetration"},
+      {name:"Fisting (vaginal)",group:"Penetration"},
+      {name:"Fisting (anal)",group:"Penetration"},
+      {name:"Double Penetration",group:"Penetration"},
+      {name:"Masturbation (solo)",group:"Pleasure"},
+      {name:"Masturbation (mutual)",group:"Pleasure"},
+      {name:"Handjobs",group:"Pleasure"},
+      {name:"Multiple Orgasms",group:"Pleasure"},
+      {name:"Squirting",group:"Pleasure"},
+      {name:"Female Ejaculation",group:"Pleasure"},
+      {name:"Creampie",group:"Pleasure"},
+      {name:"Cum play",group:"Pleasure"},
+      {name:"Being called a good girl/boy",group:"Pleasure"},
+      {name:"Threesomes (MMF)",group:"Group Play"},
+      {name:"Threesomes (FFM)",group:"Group Play"},
+      {name:"Gangbangs",group:"Group Play"},
+      {name:"Outdoor sex",group:"Public & Exhibitionism"},
+      {name:"Sex In Public",group:"Public & Exhibitionism"},
+      {name:"Making Home Movies",group:"Public & Exhibitionism"},
+    ]
+  },
+  "Toys & Equipment": {
+    icon:"🎀",
+    description:"From simple pleasure tools to complex devices — toys enhance sensation, expand possibility, and let you explore in ways bodies alone cannot. Start simple, explore at your pace.",
+    items:[
+      {name:"Vibrators",group:"Pleasure Toys"},
+      {name:"Dildos",group:"Pleasure Toys"},
+      {name:"Butt Plugs",group:"Pleasure Toys"},
+      {name:"Anal toys",group:"Pleasure Toys"},
+      {name:"Remote-Control Devices",group:"Pleasure Toys"},
+      {name:"Toys (general exploration)",group:"Pleasure Toys"},
+      {name:"Strap-ons",group:"Pleasure Toys"},
+      {name:"Blindfolds",group:"Sensory Toys"},
+      {name:"Gags",group:"Sensory Toys"},
+      {name:"Nipple clamps",group:"Sensory Toys"},
+      {name:"Handcuffs",group:"Restraints"},
+      {name:"Chains",group:"Restraints"},
+      {name:"Rope (general)",group:"Restraints"},
+      {name:"Bondage equipment",group:"Restraints"},
+      {name:"Restraints (general)",group:"Restraints"},
+      {name:"Collars (general)",group:"Restraints"},
+      {name:"Collar and Lead/Leash",group:"Restraints"},
+      {name:"Spreader bars",group:"Restraints"},
+      {name:"Whips",group:"Impact Tools"},
+      {name:"Paddles",group:"Impact Tools"},
+      {name:"Crops",group:"Impact Tools"},
+      {name:"Floggers",group:"Impact Tools"},
+      {name:"Canes",group:"Impact Tools"},
+    ]
+  },
+  "Body Features & Aesthetics": {
+    icon:"💎",
+    description:"What draws our eye, what stirs desire — physical features and aesthetics that speak to us. Attraction is diverse, personal, and deeply valid in all its forms.",
+    items:[
+      {name:"Tattoos",group:"Body Modification"},
+      {name:"Piercings",group:"Body Modification"},
+      {name:"Body art appreciation",group:"Body Modification"},
+      {name:"High Heels",group:"Fashion & Presentation"},
+      {name:"Lingerie",group:"Fashion & Presentation"},
+      {name:"Pantyhose/Stockings",group:"Fashion & Presentation"},
+      {name:"Specific clothing styles",group:"Fashion & Presentation"},
+      {name:"Breasts",group:"Physical Features"},
+      {name:"Nipples",group:"Physical Features"},
+      {name:"Body shape preferences",group:"Physical Features"},
+      {name:"Intelligence (sapiosexuality)",group:"Personal Qualities"},
+      {name:"Personality traits",group:"Personal Qualities"},
+    ]
+  },
+  "Fluids & Edge Play": {
+    icon:"💧",
+    description:"Advanced and edge play involving bodily fluids and intense physical experiences. These practices require significant trust, communication, and often specialized knowledge for safety.",
+    items:[
+      {name:"Watersports / Golden showers",group:"Fluid Play"},
+      {name:"Scat play",group:"Fluid Play"},
+      {name:"Blood play",group:"Edge Play"},
+      {name:"Knife play",group:"Edge Play"},
+      {name:"Breath Play (advanced)",group:"Edge Play"},
+      {name:"Choking Play",group:"Edge Play"},
+      {name:"Pain (intense)",group:"Edge Play"},
+      {name:"Extreme sensation",group:"Edge Play"},
+    ]
+  },
+  "Gorean Lifestyle": {
+    icon:"🏛️",
+    description:"Inspired by John Norman's Chronicles of Gor, this philosophy centers on structured power exchange, protocol, and Master/kajira (slave) dynamics. Gorean practices emphasize ritual, positions, and total submission within consensual relationships. This is a complete lifestyle for some practitioners.",
+    items:[
+      {name:"Gorean Master/Owner",group:"Gorean Roles"},
+      {name:"Gorean Free Person",group:"Gorean Roles"},
+      {name:"Kajira (female slave)",group:"Gorean Roles"},
+      {name:"Kajirus (male slave)",group:"Gorean Roles"},
+      {name:"First Girl (lead kajira)",group:"Gorean Roles"},
+      {name:"Tower Slave (domestic service)",group:"Gorean Roles"},
+      {name:"Pleasure Slave (Gorean)",group:"Gorean Roles"},
+      {name:"Work Slave (Gorean)",group:"Gorean Roles"},
+      {name:"Panther Girl",group:"Gorean Roles"},
+      {name:"Nadu (pleasure slave position)",group:"Gorean Positions"},
+      {name:"Tower (modestly kneeling)",group:"Gorean Positions"},
+      {name:"Sula (on back, legs spread)",group:"Gorean Positions"},
+      {name:"Bara (belly, ready for binding)",group:"Gorean Positions"},
+      {name:"Lesha (ready for leashing)",group:"Gorean Positions"},
+      {name:"First Obeisance",group:"Gorean Positions"},
+      {name:"Second Obeisance",group:"Gorean Positions"},
+      {name:"Whip Position (kneeling to whip)",group:"Gorean Positions"},
+      {name:"Hair Position (Gorean)",group:"Gorean Positions"},
+      {name:"Heel Position (following)",group:"Gorean Positions"},
+      {name:"Gorean Protocols",group:"Gorean Protocol"},
+      {name:"Serving Rituals (Gorean)",group:"Gorean Protocol"},
+      {name:"Gorean Tea Service",group:"Gorean Protocol"},
+      {name:"Silk System (white/red silk)",group:"Gorean Protocol"},
+      {name:"Gorean Branding (kef mark)",group:"Gorean Protocol"},
+      {name:"Collar of Consideration",group:"Gorean Protocol"},
+      {name:"Collar of Ownership (Gorean)",group:"Gorean Protocol"},
+      {name:"Gorean Training",group:"Gorean Protocol"},
+      {name:"Slave Positions Training",group:"Gorean Protocol"},
+      {name:"Total Power Exchange (Gorean style)",group:"Gorean Dynamics"},
+      {name:"Gorean Master/slave relationship",group:"Gorean Dynamics"},
+      {name:"Kajira Submission",group:"Gorean Dynamics"},
+      {name:"Gorean Discipline",group:"Gorean Dynamics"},
+      {name:"Living as Property (Gorean)",group:"Gorean Dynamics"},
+      {name:"Gorean Philosophy Study",group:"Gorean Philosophy"},
+      {name:"Natural Order concepts",group:"Gorean Philosophy"},
+      {name:"Gorean Community Involvement",group:"Gorean Philosophy"},
+      {name:"Online Gorean Roleplay",group:"Gorean Philosophy"},
     ]
   }
 };
@@ -1048,6 +1217,24 @@ function attachCardListeners() {
     });
   });
 
+  // Tooltip click handlers
+  document.querySelectorAll('.item-name.has-tip').forEach(tip => {
+    tip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Close all other tooltips
+      document.querySelectorAll('.item-name.has-tip').forEach(t => t.classList.remove('show-tip'));
+      // Toggle this one
+      tip.classList.toggle('show-tip');
+    });
+  });
+  
+  // Close tooltips when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.item-name-wrap')) {
+      document.querySelectorAll('.item-name.has-tip').forEach(t => t.classList.remove('show-tip'));
+    }
+  });
+
   document.querySelectorAll('.item-card').forEach(card => {
     const key = card.dataset.key;
     card.querySelectorAll('[data-field]').forEach(btn => {
@@ -1157,12 +1344,32 @@ function renderAllItems() {
   // filter by search
   if (searchQuery) {
     const q = searchQuery;
-    items = items.filter(item =>
-      item.name.toLowerCase().includes(q) ||
-      item.cat.toLowerCase().includes(q) ||
-      item.group.toLowerCase().includes(q) ||
-      (TIPS[item.name] || '').toLowerCase().includes(q)
-    );
+    // Simple stemming: remove common suffixes to catch variations
+    const stem = (word) => {
+      return word.replace(/(?:ing|ed|s|er|ly)$/, '');
+    };
+    const qStem = stem(q);
+    
+    items = items.filter(item => {
+      const name = item.name.toLowerCase();
+      const cat = item.cat.toLowerCase();
+      const group = item.group.toLowerCase();
+      const tip = (TIPS[item.name] || '').toLowerCase();
+      
+      // Direct match
+      if (name.includes(q) || cat.includes(q) || group.includes(q) || tip.includes(q)) {
+        return true;
+      }
+      
+      // Stemmed match for variations
+      const nameStem = stem(name);
+      const catStem = stem(cat);
+      const groupStem = stem(group);
+      const tipStem = stem(tip);
+      
+      return nameStem.includes(qStem) || catStem.includes(qStem) || 
+             groupStem.includes(qStem) || tipStem.includes(qStem);
+    });
   }
 
   // sort
