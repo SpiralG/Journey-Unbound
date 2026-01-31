@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Journey Unbound – Kink & Connection Checklist</title>
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #1E3A8A;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input  { font-family: inherit; }
+
+/* ─── BRAND TOKENS ─────────────────────────────────────────────────── */
+:root {
+  --purple:       #6B46C1;
+  --purple-light: #7C3AED;
+  --peacock:      #0891B2;
+  --turquoise:    #14B8A6;
+  --pink:         #F472B6;
+  --deep-blue:    #1E3A8A;
+  --light-purple: #EDE9FE;
+  --soft-pink:    #FDF2F8;
+  --muted:        #6B7280;
+  --border:       #E5E7EB;
+  --red:          #EF4444;
+  --orange:       #F97316;
+}
+
+/* ─── INTRO SCREEN ─────────────────────────────────────────────────── */
+#intro {
+  min-height: 100vh;
+  background: linear-gradient(150deg, var(--light-purple) 0%, #fff 45%, var(--soft-pink) 100%);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+#intro .inner { max-width: 600px; width: 100%; text-align: center; }
+.intro-eyebrow {
+  font-size: 13px; letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--peacock); font-weight: 600; margin-bottom: 6px;
+}
+#intro h1 {
+  font-family: Georgia, serif;
+  font-size: 44px; color: var(--purple); line-height: 1.1; margin-bottom: 4px;
+}
+.intro-sub {
+  font-size: 20px; color: var(--peacock); font-style: italic; margin-bottom: 28px;
+}
+.intro-card {
+  background: #fff; border-radius: 16px; padding: 28px;
+  box-shadow: 0 4px 28px rgba(107,70,193,0.1);
+  text-align: left; margin-bottom: 24px;
+}
+.intro-card p { color: var(--deep-blue); font-size: 14px; line-height: 1.7; margin-bottom: 18px; }
+.intro-legend {
+  background: var(--light-purple); border-radius: 10px; padding: 16px; margin-bottom: 14px;
+}
+.intro-legend .legend-title {
+  font-size: 11px; font-weight: 700; color: var(--purple);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+}
+.intro-legend .legend-body { font-size: 11.5px; color: #4a5568; line-height: 2; }
+.intro-legend .need-highlight { color: var(--turquoise); font-weight: 600; }
+.intro-blessing { color: var(--muted); font-size: 12px; font-style: italic; text-align: center; }
+
+.mode-label {
+  font-size: 13px; color: var(--deep-blue); font-weight: 600; margin-bottom: 10px;
+}
+.mode-buttons { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.mode-btn {
+  background: #fff; border-radius: 12px; padding: 14px 22px;
+  text-align: left; max-width: 240px; width: 100%;
+  transition: box-shadow 0.2s;
+}
+.mode-btn:hover { box-shadow: 0 4px 20px rgba(107,70,193,0.2); }
+.mode-btn.peacock { border: 2px solid var(--peacock); }
+.mode-btn.purple  { border: 2px solid var(--purple); }
+.mode-btn .btn-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.mode-btn.peacock .btn-title { color: var(--peacock); }
+.mode-btn.purple  .btn-title { color: var(--purple); }
+.mode-btn .btn-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+/* ─── HEADER ───────────────────────────────────────────────────────── */
+#header {
+  background: linear-gradient(135deg, var(--purple), var(--deep-blue));
+  padding: 14px 18px; position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; flex-wrap: wrap;
+}
+.header-left .title {
+  color: #fff; font-family: Georgia, serif; font-size: 18px; font-weight: 700;
+}
+.header-left .mode-badge {
+  color: rgba(255,255,255,0.5); font-size: 9px; margin-left: 10px;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.header-btns { display: flex; gap: 6px; }
+.header-btns button {
+  background: rgba(255,255,255,0.12); color: #fff;
+  border: 1px solid rgba(255,255,255,0.25); border-radius: 6px;
+  padding: 5px 11px; font-size: 11px;
+}
+.header-btns button:hover { background: rgba(255,255,255,0.22); }
+
+/* ─── CATEGORY NAV ─────────────────────────────────────────────────── */
+#cat-nav {
+  background: #fff; border-bottom: 1px solid var(--border);
+  overflow-x: auto; position: sticky; top: 52px; z-index: 9;
+  -webkit-overflow-scrolling: touch;
+}
+#cat-nav .nav-inner {
+  max-width: 860px; margin: 0 auto;
+  display: flex; gap: 5px; padding: 10px 14px;
+}
+.cat-btn {
+  border-radius: 18px; padding: 5px 12px; font-size: 10.5px;
+  white-space: nowrap; position: relative; transition: all 0.15s;
+  background: transparent; color: var(--deep-blue);
+  border: 1px solid var(--deep-blue);
+}
+.cat-btn.active {
+  background: var(--purple); color: #fff; border-color: var(--purple);
+  font-weight: 600;
+}
+.cat-btn .badge {
+  position: absolute; top: -5px; right: -5px;
+  background: var(--pink); color: #fff;
+  border-radius: 8px; font-size: 7.5px; font-weight: 700;
+  padding: 1px 4px; min-width: 18px; text-align: center;
+}
+.cat-btn .badge.complete { background: var(--turquoise); }
+
+/* ─── MAIN CONTENT ─────────────────────────────────────────────────── */
+#main {
+  max-width: 860px; margin: 0 auto; padding: 18px 14px 40px;
+  background: linear-gradient(180deg, var(--light-purple) 0%, #fff 25%);
+  min-height: calc(100vh - 104px);
+}
+.desc-card {
+  background: #fff; border-radius: 10px; padding: 12px 16px;
+  margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  border-left: 4px solid var(--turquoise);
+  font-size: 12.5px; color: var(--deep-blue); line-height: 1.6;
+}
+
+/* sub-group filter pills */
+.filter-row { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+.filter-pill {
+  background: #fff; color: var(--peacock);
+  border: 1px solid var(--peacock); border-radius: 14px;
+  padding: 3px 10px; font-size: 10px; transition: all 0.15s;
+}
+.filter-pill.active {
+  background: var(--peacock); color: #fff; font-weight: 600;
+}
+
+/* legend bar */
+.legend-bar {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
+  padding: 8px 12px; background: rgba(255,255,255,0.7); border-radius: 8px;
+  font-size: 9.5px; color: var(--muted);
+}
+.legend-bar .lbl { font-weight: 700; }
+.legend-bar .lc  { font-weight: 600; }
+
+/* group heading */
+.group-heading {
+  font-size: 10px; font-weight: 700; color: var(--purple);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin: 18px 0 7px 2px;
+}
+.group-heading:first-child { margin-top: 0; }
+
+/* ─── ITEM CARD ─────────────────────────────────────────────────────── */
+.item-card {
+  background: #fff; border-radius: 10px; margin-bottom: 6px;
+  border: 1px solid var(--border); transition: border 0.2s;
+}
+.item-card.touched { border-width: 2px; border-color: var(--purple); }
+
+.card-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 12px 6px; gap: 8px;
+}
+.card-top .item-name { font-size: 13px; color: var(--deep-blue); font-weight: 500; flex: 1; }
+.fetish-btn {
+  background: #f3f4f6; border-radius: 6px; padding: 2px 7px;
+  font-size: 9px; font-weight: 700; color: var(--muted); transition: all 0.15s;
+}
+.fetish-btn.on { background: var(--pink); color: #fff; }
+
+/* row layout inside card */
+.card-row { display: flex; gap: 12px; padding: 0 12px; flex-wrap: wrap; }
+.card-row + .card-row { padding-top: 6px; }
+
+/* generic label */
+.lbl-sm {
+  font-size: 9px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.8px; margin-bottom: 3px; font-weight: 600;
+}
+.lbl-sm.need { color: var(--turquoise); }
+
+/* chip strip */
+.chip-strip { display: flex; gap: 4px; flex-wrap: wrap; }
+.chip {
+  border-radius: 5px; padding: 3px 9px; font-size: 9px;
+  transition: all 0.15s; border: none;
+}
+/* experience chips */
+.chip.exp        { background: #f3f4f6; color: var(--muted); }
+.chip.exp.on     { background: var(--peacock); color: #fff; font-weight: 600; }
+/* rating emoji buttons */
+.rating-strip { display: flex; gap: 3px; }
+.rating-btn {
+  width: 28px; height: 28px; border-radius: 6px; font-size: 13px;
+  background: #f3f4f6; color: var(--muted); border: none;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.rating-btn.on { background: var(--purple); color: #fff; }
+/* limit chips */
+.chip.limit      { background: #fff; font-weight: 600; font-size: 9px; border-radius: 5px; padding: 3px 9px; }
+.chip.limit.hard { border: 1.5px solid var(--red);     color: var(--red); }
+.chip.limit.soft { border: 1.5px solid var(--orange);  color: var(--orange); }
+.chip.limit.cur  { border: 1.5px solid var(--peacock); color: var(--peacock); }
+.chip.limit.enj  { border: 1.5px solid var(--turquoise); color: var(--turquoise); }
+.chip.limit.fav  { border: 1.5px solid var(--pink);    color: var(--pink); }
+.chip.limit.hard.on { background: var(--red);          color: #fff; }
+.chip.limit.soft.on { background: var(--orange);       color: #fff; }
+.chip.limit.cur.on  { background: var(--peacock);      color: #fff; }
+.chip.limit.enj.on  { background: var(--turquoise);    color: #fff; }
+.chip.limit.fav.on  { background: var(--pink);         color: #fff; }
+/* need chips */
+.chip.need      { background: #f0fdfa; color: var(--turquoise); border: 1px solid var(--turquoise); border-radius: 10px; padding: 2px 8px; font-size: 9px; }
+.chip.need.on   { background: var(--turquoise); color: #fff; font-weight: 600; }
+
+/* notes & revisit footer */
+.card-footer {
+  display: flex; gap: 10px; align-items: flex-end;
+  padding: 6px 12px 9px; flex-wrap: wrap;
+}
+.notes-toggle {
+  background: none; border: none; color: var(--muted);
+  font-size: 10px; text-decoration: underline; padding: 0;
+  margin-bottom: 4px; display: block;
+}
+.notes-input {
+  width: 100%; padding: 5px 8px; border: 1px solid var(--border);
+  border-radius: 5px; font-size: 11px; color: var(--deep-blue); outline: none;
+}
+.notes-input:focus { border-color: var(--purple); }
+.revisit-area { display: flex; flex-direction: column; }
+.revisit-date { font-size: 9px; color: var(--muted); margin-bottom: 2px; min-height: 13px; }
+.revisit-btn {
+  background: #f3f4f6; border: 1px solid var(--border); border-radius: 5px;
+  padding: 3px 8px; font-size: 9px; color: var(--muted);
+}
+.revisit-btn:hover { background: #e5e7eb; }
+
+/* blessing footer */
+.blessing {
+  text-align: center; padding-top: 16px;
+  color: var(--pink); font-size: 13px; font-style: italic;
+}
+
+/* ─── NEEDS GUIDE MODAL ────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 100; display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.modal {
+  background: #fff; border-radius: 16px; max-width: 540px; width: 100%;
+  max-height: 80vh; overflow-y: auto; padding: 28px;
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.modal-header h3 { color: var(--turquoise); font-size: 18px; }
+.modal-close { font-size: 22px; color: var(--muted); background: none; border: none; }
+.modal-intro { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 18px; }
+.needs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.need-card {
+  background: #f0fdfa; border-radius: 8px; padding: 10px 12px;
+  border: 1px solid rgba(20,184,166,0.15);
+}
+.need-card .nc-label { color: var(--turquoise); font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+.need-card .nc-desc  { color: #4a5568; font-size: 11px; line-height: 1.4; }
+
+/* ─── PRINT VIEW ───────────────────────────────────────────────────── */
+#print-view { display: none; max-width: 860px; margin: 0 auto; padding: 24px; font-family: sans-serif; }
+#print-view .print-header { text-align: center; margin-bottom: 20px; }
+#print-view .print-title  { font-family: Georgia, serif; font-size: 26px; color: var(--purple); font-weight: 700; }
+#print-view .print-sub    { font-size: 14px; color: var(--peacock); }
+.print-legend { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; font-size: 10px; color: var(--muted); }
+.print-card { page-break-inside: avoid; margin-bottom: 20px; }
+.print-cat-header {
+  background: var(--purple); color: #fff; padding: 6px 12px;
+  border-radius: 8px 8px 0 0; font-size: 13px; font-weight: 600;
+}
+.print-table { width: 100%; border-collapse: collapse; font-size: 9px; }
+.print-table th {
+  background: var(--light-purple); padding: 3px 5px;
+  border: 1px solid #ccc; text-align: left; font-size: 8px; color: var(--deep-blue);
+}
+.print-table td { padding: 2px 6px; border: 1px solid #ccc; }
+.print-table .group-row td { background: #f3f4f6; font-style: italic; color: var(--muted); font-size: 8px; }
+.print-table .need-cell { color: var(--turquoise); }
+.print-table .notes-cell { color: var(--muted); }
+.print-blessing { text-align: center; margin-top: 30px; color: var(--pink); font-style: italic; font-size: 12px; }
+.print-btns { text-align: center; margin-bottom: 20px; }
+.print-btns button {
+  border-radius: 8px; padding: 8px 20px; font-size: 13px; color: #fff; margin: 0 4px;
+}
+.print-btns .back-btn  { background: var(--deep-blue); }
+.print-btns .print-btn { background: var(--purple); }
+
+/* ─── PRINT MEDIA ──────────────────────────────────────────────────── */
+@media print {
+  #intro, #header, #cat-nav, #main, .modal-overlay, .print-btns { display: none !important; }
+  #print-view { display: block !important; }
+  body { font-size: 10px; }
+  .print-card { page-break-inside: avoid; margin-bottom: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     INTRO SCREEN
+═══════════════════════════════════════════════════════════════════════ -->
+<div id="intro">
+  <div class="inner">
+    <div class="intro-eyebrow">Welcome to</div>
+    <h1>Journey Unbound</h1>
+    <div class="intro-sub">Kink &amp; Connection Checklist</div>
+    <div class="intro-card">
+      <p>A living tool for <strong>self-discovery</strong> — not a test, not a contract. It uses the community-familiar rating system but adds a layer of emotional depth that's uniquely yours.</p>
+      <div class="intro-legend">
+        <div class="legend-title">How the ratings work</div>
+        <div class="legend-body" id="intro-legend-body"></div>
+      </div>
+      <p class="intro-blessing">💜 There are no wrong answers. Your journey is precious. You are loved exactly as you are.</p>
+    </div>
+    <div class="mode-label">How would you like to explore?</div>
+    <div class="mode-buttons">
+      <button class="mode-btn peacock" onclick="startMode('anonymous')">
+        <div class="btn-title">🔒 Anonymous</div>
+        <div class="btn-desc">Nothing is saved. Explore freely and print when you're ready.</div>
+      </button>
+      <button class="mode-btn purple" onclick="startMode('profile')">
+        <div class="btn-title">💜 Save to Profile</div>
+        <div class="btn-desc">Your progress saves and grows with you over time. Revisit anytime.</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CHECKLIST SCREENS (hidden until mode chosen)
+═══════════════════════════════════════════════════════════════════════ -->
+<div id="header" style="display:none">
+  <div class="header-left">
+    <span class="title">Journey Unbound</span>
+    <span class="mode-badge" id="mode-badge"></span>
+  </div>
+  <div class="header-btns">
+    <button onclick="openNeedsGuide()">💚 Needs Guide</button>
+    <button onclick="showPrint()">🖨️ Print</button>
+    <button onclick="goIntro()">↩ Back</button>
+  </div>
+</div>
+
+<div id="cat-nav" style="display:none">
+  <div class="nav-inner" id="cat-nav-inner"></div>
+</div>
+
+<div id="main" style="display:none">
+  <div class="desc-card" id="desc-card"></div>
+  <div class="filter-row" id="filter-row"></div>
+  <div class="legend-bar" id="legend-bar"></div>
+  <div id="items-container"></div>
+  <div class="blessing">💜 You are loved. Your journey is precious. Love yourself.</div>
+</div>
+
+<!-- Needs Guide Modal -->
+<div class="modal-overlay" id="needs-modal" style="display:none" onclick="closeNeedsGuide(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>💚 NVC Needs Guide</h3>
+      <button class="modal-close" onclick="closeNeedsGuide()">×</button>
+    </div>
+    <p class="modal-intro">These needs come from Nonviolent Communication (NVC). When choosing a need for an activity, ask yourself: <em>"What does this give me? What am I really looking for?"</em></p>
+    <div class="needs-grid" id="needs-grid"></div>
+  </div>
+</div>
+
+<!-- Print View -->
+<div id="print-view">
+  <div class="print-btns">
+    <button class="back-btn" onclick="hidePrint()">← Back</button>
+    <button class="print-btn" onclick="window.print()">🖨️ Print</button>
+  </div>
+  <div class="print-header">
+    <div class="print-title">Journey Unbound</div>
+    <div class="print-sub">Kink &amp; Connection Checklist</div>
+  </div>
+  <div class="print-legend" id="print-legend"></div>
+  <div id="print-body"></div>
+  <div class="print-blessing">💜 You are loved. Your journey is precious. Love yourself.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     APPLICATION LOGIC
+═══════════════════════════════════════════════════════════════════════ -->
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const NVC_NEEDS = [
+  { label:"Connection",    desc:"Intimacy, closeness, feeling truly seen by another person" },
+  { label:"Excitement",    desc:"Novelty, aliveness, that electric feeling of something new" },
+  { label:"Surrender",     desc:"Letting go, releasing control, trusting someone fully" },
+  { label:"Power",         desc:"Agency, influence, feeling strong and in charge" },
+  { label:"Expression",    desc:"Creativity, authenticity, showing your true self" },
+  { label:"Safety",        desc:"Being held, protected, knowing you are secure" },
+  { label:"Play",          desc:"Joy, lightness, laughter, the pure fun of it" },
+  { label:"Healing",       desc:"Processing, integrating, moving through something difficult" },
+  { label:"Belonging",     desc:"Being part of something, feeling accepted as you are" },
+  { label:"Autonomy",      desc:"Freedom, self-determination, choosing your own path" },
+  { label:"Respect",       desc:"Being valued, honoured, taken seriously" },
+  { label:"Trust",         desc:"Knowing someone has your back, relying on them" },
+  { label:"Nurturing",     desc:"Being cared for, or caring for someone, tenderness" },
+  { label:"Validation",    desc:"Having your feelings acknowledged and affirmed" },
+  { label:"Adventure",     desc:"Pushing into the unknown, exploring new territory" },
+  { label:"Presence",      desc:"Being fully in the moment, mindfulness, stillness" },
+  { label:"Vulnerability", desc:"Opening up, being raw and real, emotional risk" },
+  { label:"Purpose",       desc:"Feeling like this journey means something deeper" },
+];
+
+const RATINGS = [
+  { value:0, label:"Not for Me",  emoji:"🚫" },
+  { value:1, label:"Not Yet",     emoji:"🌱" },
+  { value:2, label:"Neutral",     emoji:"〰️" },
+  { value:3, label:"Open To It",  emoji:"✨" },
+  { value:4, label:"Enjoy",       emoji:"💛" },
+  { value:5, label:"Favourite",   emoji:"💜" },
+];
+
+const EXPERIENCE = ["Never Tried","Tried","Versed"];
+const LIMITS     = [
+  { label:"Hard Limit", cls:"hard" },
+  { label:"Soft Limit", cls:"soft" },
+  { label:"Curious",    cls:"cur"  },
+  { label:"Enjoy",      cls:"enj"  },
+  { label:"Favourite",  cls:"fav"  },
+];
+
+const DATA = {
+  "Roles & Identity": {
+    icon:"🎭",
+    description:"Explore which roles resonate with you. Many people identify with more than one — and roles shift over time. This isn't a permanent label, it's a snapshot of where you are right now.",
+    items:[
+      {name:"Dominant (Dom / Domme)",group:"Dominant"},
+      {name:"Daddy / Mommy",group:"Dominant"},
+      {name:"Master / Mistress",group:"Dominant"},
+      {name:"Owner",group:"Dominant"},
+      {name:"Brat Tamer",group:"Dominant"},
+      {name:"Disciplinarian",group:"Dominant"},
+      {name:"Sadist",group:"Dominant"},
+      {name:"Primal – Predator",group:"Dominant"},
+      {name:"Sir / Ma\u2019am",group:"Dominant"},
+      {name:"Caregiver",group:"Dominant"},
+      {name:"Financial Dominant (FinDom)",group:"Dominant"},
+      {name:"Submissive (Sub)",group:"Submissive"},
+      {name:"Slave",group:"Submissive"},
+      {name:"Brat",group:"Submissive"},
+      {name:"Little",group:"Submissive"},
+      {name:"Baby / Babygirl / Babyboy",group:"Submissive"},
+      {name:"Good Girl / Good Boy",group:"Submissive"},
+      {name:"Alpha Sub",group:"Submissive"},
+      {name:"Smart-Assed Masochist (SAM)",group:"Submissive"},
+      {name:"Masochist",group:"Submissive"},
+      {name:"Prey",group:"Submissive"},
+      {name:"Pay Pig / Human ATM",group:"Submissive"},
+      {name:"Do-Me Sub",group:"Submissive"},
+      {name:"Caring Submissive",group:"Submissive"},
+      {name:"Switch",group:"Fluid & Other"},
+      {name:"Kinkster (exploring)",group:"Fluid & Other"},
+      {name:"Primal – Prey",group:"Fluid & Other"},
+      {name:"Top",group:"Fluid & Other"},
+      {name:"Bottom",group:"Fluid & Other"},
+      {name:"Hedonist",group:"Fluid & Other"},
+      {name:"Pet – Puppy",group:"Pet Play & Furry"},
+      {name:"Pet – Kitten",group:"Pet Play & Furry"},
+      {name:"Pet – Pony",group:"Pet Play & Furry"},
+      {name:"Pet – Other animal",group:"Pet Play & Furry"},
+      {name:"Owner (of a pet)",group:"Pet Play & Furry"},
+      {name:"Furry – I have a Fursona",group:"Pet Play & Furry"},
+      {name:"Furry – roleplay in character",group:"Pet Play & Furry"},
+      {name:"Furry – cosplay / partial suit",group:"Pet Play & Furry"},
+      {name:"Furry – full suit play",group:"Pet Play & Furry"},
+      {name:"Furry – community & social",group:"Pet Play & Furry"},
+    ]
+  },
+  "Relationships & Sexuality": {
+    icon:"💞",
+    description:"Understanding your relationship style and sexual preferences is foundational. Inspired by the wisdom in The Ethical Slut — there is no single \u2018right\u2019 way to love or connect. Only what\u2019s authentic to you.",
+    items:[
+      {name:"Monogamy (exclusive partnership)",group:"Relationship Structures"},
+      {name:"Ethical Non-Monogamy (ENM)",group:"Relationship Structures"},
+      {name:"Polyamory – multiple romantic relationships",group:"Relationship Structures"},
+      {name:"Open relationship – romantic exclusivity, sexual freedom",group:"Relationship Structures"},
+      {name:"Relationship Anarchy",group:"Relationship Structures"},
+      {name:"Swinging (with couples)",group:"Relationship Structures"},
+      {name:"Friends with Benefits",group:"Relationship Structures"},
+      {name:"Solo Polyamory",group:"Relationship Structures"},
+      {name:"Hierarchical Polyamory",group:"Relationship Structures"},
+      {name:"Non-Hierarchical Polyamory",group:"Relationship Structures"},
+      {name:"Triad / Throuple",group:"Relationship Structures"},
+      {name:"Polycule",group:"Relationship Structures"},
+      {name:"Cuckold / Cuckquean dynamic",group:"Relationship Structures"},
+      {name:"Doesn\u2019t fit a label – fluid",group:"Relationship Structures"},
+      {name:"Solo exploration",group:"Sexual Preferences"},
+      {name:"One partner",group:"Sexual Preferences"},
+      {name:"Multiple partners (sequential)",group:"Sexual Preferences"},
+      {name:"Multiple partners (simultaneous)",group:"Sexual Preferences"},
+      {name:"Group play",group:"Sexual Preferences"},
+      {name:"Voyeurism – watching others",group:"Sexual Preferences"},
+      {name:"Exhibitionism – being watched",group:"Sexual Preferences"},
+      {name:"Kink with deep emotional connection",group:"Sexual Preferences"},
+      {name:"Kink without emotional connection",group:"Sexual Preferences"},
+      {name:"Casual play partners",group:"Sexual Preferences"},
+      {name:"Long-term D/s dynamic",group:"Sexual Preferences"},
+      {name:"Play-only (no romantic relationship)",group:"Sexual Preferences"},
+    ]
+  },
+  "Sensation & Touch": {
+    icon:"🌸",
+    description:"How your body experiences and responds to physical sensation is deeply personal. Notice what draws you in — and what feels like a boundary. Both are information.",
+    items:[
+      {name:"Gentle touch and caressing",group:"Soft Sensation"},
+      {name:"Feather or soft material play",group:"Soft Sensation"},
+      {name:"Massage (giving)",group:"Soft Sensation"},
+      {name:"Massage (receiving)",group:"Soft Sensation"},
+      {name:"Tickling",group:"Soft Sensation"},
+      {name:"Scratching (receiving)",group:"Soft Sensation"},
+      {name:"Scratching (giving)",group:"Soft Sensation"},
+      {name:"Biting – gentle",group:"Soft Sensation"},
+      {name:"Biting – intense",group:"Intense Sensation"},
+      {name:"Ice / temperature play (cold)",group:"Intense Sensation"},
+      {name:"Heat play (warm wax, warming oils)",group:"Intense Sensation"},
+      {name:"Hot wax dripping",group:"Intense Sensation"},
+      {name:"Wartenburg pinwheel",group:"Intense Sensation"},
+      {name:"Abrasion (scraping, sanding)",group:"Intense Sensation"},
+      {name:"Electricity – TENS unit",group:"Intense Sensation"},
+      {name:"Electricity – violet wand",group:"Intense Sensation"},
+      {name:"Sensory deprivation – blindfold",group:"Deprivation"},
+      {name:"Sensory deprivation – sound / ears",group:"Deprivation"},
+      {name:"Sensory deprivation – full hood",group:"Deprivation"},
+    ]
+  },
+  "Communication & Connection": {
+    icon:"🗣️",
+    description:"Communication is the heartbeat of healthy kink. These aren\u2019t just activities — they\u2019re the skills that make everything else possible and safe.",
+    items:[
+      {name:"Eye contact during intimacy",group:"Core Connection"},
+      {name:"Verbal affirmation and praise",group:"Core Connection"},
+      {name:"Dirty talk",group:"Core Connection"},
+      {name:"Expressing desires out loud",group:"Core Connection"},
+      {name:"Active listening",group:"Core Connection"},
+      {name:"Non-verbal communication signals",group:"Core Connection"},
+      {name:"Intentional eye gazing",group:"Core Connection"},
+      {name:"Creating safe words / signals",group:"Negotiation & Safety"},
+      {name:"Negotiating scenes beforehand",group:"Negotiation & Safety"},
+      {name:"Check-ins during activity",group:"Negotiation & Safety"},
+      {name:"Aftercare – talking it through",group:"Negotiation & Safety"},
+      {name:"Discussing boundaries openly",group:"Negotiation & Safety"},
+      {name:"Speech restrictions",group:"Negotiation & Safety"},
+      {name:"Journaling about experiences",group:"Reflection"},
+      {name:"Sharing experiences with partner(s)",group:"Reflection"},
+      {name:"Processing emotions after play",group:"Reflection"},
+    ]
+  },
+  "Power Exchange": {
+    icon:"⚡",
+    description:"Power exchange is one of the deepest forms of connection two people can share. Explore where you feel most alive — leading, following, or flowing between both.",
+    items:[
+      {name:"Taking the lead",group:"Foundational"},
+      {name:"Following another\u2019s lead",group:"Foundational"},
+      {name:"Receiving commands",group:"Foundational"},
+      {name:"Giving commands",group:"Foundational"},
+      {name:"Switching roles mid-scene",group:"Foundational"},
+      {name:"Service acts (non-sexual)",group:"Deeper Exchange"},
+      {name:"Acts of care and nurturing",group:"Deeper Exchange"},
+      {name:"Protocol and ritual",group:"Deeper Exchange"},
+      {name:"Orgasm control / denial",group:"Deeper Exchange"},
+      {name:"Financial domination",group:"Deeper Exchange"},
+      {name:"Chastity play",group:"Deeper Exchange"},
+      {name:"Power exchange in daily life",group:"Total Exchange"},
+      {name:"24/7 dynamic",group:"Total Exchange"},
+      {name:"Total Power Exchange (TPE)",group:"Total Exchange"},
+      {name:"Ownership dynamic",group:"Total Exchange"},
+    ]
+  },
+  "Restraint & Bondage": {
+    icon:"🪢",
+    description:"From the lightest suggestion of restraint to full suspension — bondage is about trust, vulnerability, and the freedom that comes from letting go.",
+    items:[
+      {name:"Holding hands / wrists during intimacy",group:"Gentle"},
+      {name:"Light restraint with hands",group:"Gentle"},
+      {name:"Silk scarves or soft materials",group:"Gentle"},
+      {name:"Velcro / quick-release restraints",group:"Gentle"},
+      {name:"Leather restraints",group:"Intermediate"},
+      {name:"Metal restraints / handcuffs",group:"Intermediate"},
+      {name:"Spreader bars",group:"Intermediate"},
+      {name:"Rope bondage – decorative",group:"Intermediate"},
+      {name:"Rope bondage – functional",group:"Intermediate"},
+      {name:"Rope bondage – Japanese (Shibari)",group:"Advanced"},
+      {name:"Rope bondage – suspension",group:"Advanced"},
+      {name:"Bondage furniture",group:"Advanced"},
+      {name:"Mummification",group:"Advanced"},
+      {name:"Straight jacket",group:"Advanced"},
+    ]
+  },
+  "Impact Play": {
+    icon:"✋",
+    description:"Impact play ranges from the playful sting of a hand to the deep thud of a flogger. Your body knows what it wants — listen to it.",
+    items:[
+      {name:"Spanking – hand (gentle)",group:"Gentle"},
+      {name:"Spanking – hand (moderate)",group:"Gentle"},
+      {name:"Spanking – hand (intense)",group:"Moderate"},
+      {name:"Spanking – belt / strap",group:"Moderate"},
+      {name:"Spanking – OTK (over the knee)",group:"Moderate"},
+      {name:"Paddles – soft",group:"Moderate"},
+      {name:"Paddles – hard",group:"Moderate"},
+      {name:"Floggers – gentle",group:"Moderate"},
+      {name:"Floggers – intense",group:"Intense"},
+      {name:"Crops",group:"Intense"},
+      {name:"Canes",group:"Intense"},
+      {name:"Whips",group:"Intense"},
+      {name:"Hair pulling",group:"Gentle"},
+      {name:"Slapping (face)",group:"Intense"},
+      {name:"Rough body play",group:"Intense"},
+    ]
+  },
+  "Role Play & Fantasy": {
+    icon:"🌙",
+    description:"Fantasy is where imagination meets desire. These are the stories your inner world wants to tell. No story is too wild, too soft, or too strange here.",
+    items:[
+      {name:"Light role play scenarios",group:"Exploratory"},
+      {name:"Authority figures (teacher / student)",group:"Exploratory"},
+      {name:"Service scenarios (maid, butler)",group:"Exploratory"},
+      {name:"Stranger / pick-up fantasy",group:"Exploratory"},
+      {name:"Age play – as younger",group:"Specialised"},
+      {name:"Age play – as older / caregiver",group:"Specialised"},
+      {name:"Medical scenes",group:"Specialised"},
+      {name:"Interrogation scenarios",group:"Specialised"},
+      {name:"Capture / kidnapping fantasy",group:"Specialised"},
+      {name:"Consensual non-consent (CNC)",group:"Specialised"},
+      {name:"Primal play (predator / prey)",group:"Specialised"},
+      {name:"Deity / worship scenarios",group:"Specialised"},
+      {name:"Dollification",group:"Specialised"},
+      {name:"Serving as furniture / object",group:"Specialised"},
+    ]
+  },
+  "Exploration & Expression": {
+    icon:"✨",
+    description:"Self-expression through kink is deeply creative. This section is about how you want to show up in the world — and how you want to be seen.",
+    items:[
+      {name:"Wearing special clothing / lingerie",group:"Expression"},
+      {name:"Dressing up for pleasure",group:"Expression"},
+      {name:"Exploring gender expression",group:"Expression"},
+      {name:"Cross-dressing",group:"Expression"},
+      {name:"Forced feminization / masculinization",group:"Expression"},
+      {name:"Body worship (giving)",group:"Worship"},
+      {name:"Body worship (receiving)",group:"Worship"},
+      {name:"Foot worship",group:"Worship"},
+      {name:"Collars – private",group:"Worship"},
+      {name:"Collars – public",group:"Worship"},
+      {name:"Erotic photography – private",group:"Visibility"},
+      {name:"Erotic photography – shared",group:"Visibility"},
+      {name:"Exhibitionism – private space",group:"Visibility"},
+      {name:"Exhibitionism – semi-public",group:"Visibility"},
+    ]
+  },
+  "Energy & Presence": {
+    icon:"🌊",
+    description:"Beyond the physical, kink can be a deeply spiritual and energetic experience. This section honours that quieter, deeper dimension of connection.",
+    items:[
+      {name:"Mindful awareness during intimacy",group:"Mindfulness"},
+      {name:"Breathwork together",group:"Mindfulness"},
+      {name:"Meditation before / after play",group:"Mindfulness"},
+      {name:"Synchronized breathing",group:"Mindfulness"},
+      {name:"Energy exchange (non-physical)",group:"Spiritual"},
+      {name:"Intentional eye gazing",group:"Spiritual"},
+      {name:"Creating sacred space",group:"Spiritual"},
+      {name:"Ritualized intimacy",group:"Spiritual"},
+      {name:"Tantric practices",group:"Spiritual"},
+      {name:"Ecstatic / trance states",group:"Spiritual"},
+      {name:"Hypnosis / guided trance",group:"Spiritual"},
+    ]
+  }
+};
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let mode            = null;   // 'anonymous' | 'profile'
+let activeCategory  = Object.keys(DATA)[0];
+let activeFilter    = 'All';
+let selections      = {};     // key: "cat||idx" → { experience, rating, limit, fetish, need, notes, revisitDates }
+
+function emptyEntry() {
+  return { experience:null, rating:null, limit:null, fetish:false, need:null, notes:'', revisitDates:[] };
+}
+function buildDefaults() {
+  const s = {};
+  Object.entries(DATA).forEach(([cat,{items}]) => {
+    items.forEach((_,i) => { s[cat+'||'+i] = emptyEntry(); });
+  });
+  return s;
+}
+function groupItems(items) {
+  const g = {};
+  items.forEach((item,i) => {
+    if (!g[item.group]) g[item.group] = [];
+    g[item.group].push({...item, idx:i});
+  });
+  return g;
+}
+function completionPct(cat) {
+  const items = DATA[cat].items;
+  let filled = 0;
+  items.forEach((_,i) => {
+    const s = selections[cat+'||'+i];
+    if (s && (s.experience || s.limit || s.rating != null)) filled++;
+  });
+  return Math.round((filled / items.length) * 100);
+}
+function limitCls(label) {
+  const found = LIMITS.find(l => l.label === label);
+  return found ? found.cls : '';
+}
+function save() {
+  if (mode === 'profile') {
+    try { localStorage.setItem('ju_checklist', JSON.stringify(selections)); } catch(e) {}
+  }
+}
+function load() {
+  try {
+    const raw = localStorage.getItem('ju_checklist');
+    if (raw) { selections = JSON.parse(raw); return; }
+  } catch(e) {}
+  selections = buildDefaults();
+}
+
+// ─── SCREENS ────────────────────────────────────────────────────────────────
+function showIntroScreen() {
+  document.getElementById('intro').style.display = 'flex';
+  document.getElementById('header').style.display = 'none';
+  document.getElementById('cat-nav').style.display = 'none';
+  document.getElementById('main').style.display = 'none';
+  document.getElementById('print-view').style.display = 'none';
+}
+function showChecklist() {
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('header').style.display = 'flex';
+  document.getElementById('cat-nav').style.display = 'block';
+  document.getElementById('main').style.display = 'block';
+  document.getElementById('print-view').style.display = 'none';
+  document.getElementById('mode-badge').textContent = mode === 'anonymous' ? '🔒 Anonymous' : '💜 Profile';
+  renderCatNav();
+  renderMain();
+}
+function showPrint() {
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('header').style.display = 'none';
+  document.getElementById('cat-nav').style.display = 'none';
+  document.getElementById('main').style.display = 'none';
+  document.getElementById('print-view').style.display = 'block';
+  renderPrint();
+}
+function hidePrint() { showChecklist(); }
+function goIntro()    { showIntroScreen(); }
+
+// ─── MODE ENTRY ─────────────────────────────────────────────────────────────
+function startMode(m) {
+  mode = m;
+  if (m === 'profile') { load(); } else { selections = buildDefaults(); }
+  showChecklist();
+}
+
+// ─── RENDER INTRO LEGEND ────────────────────────────────────────────────────
+(function renderIntroLegend() {
+  const ratingStr = RATINGS.map(r => r.emoji + ' ' + r.value + '=' + r.label).join(' · ');
+  document.getElementById('intro-legend-body').innerHTML =
+    '<strong>Experience:</strong> Never Tried · Tried · Versed<br>' +
+    '<strong>Rating:</strong> ' + ratingStr + '<br>' +
+    '<strong>Limit:</strong> Hard Limit · Soft Limit · Curious · Enjoy · Favourite<br>' +
+    '<strong>Fetish:</strong> Something you feel a deep pull toward<br>' +
+    '<span style="color:#14B8A6;font-weight:600">💚 Need:</span> <em>What does this activity meet in you?</em> — the Journey Unbound layer';
+})();
+
+// ─── RENDER NEEDS GUIDE ─────────────────────────────────────────────────────
+(function renderNeedsGuide() {
+  document.getElementById('needs-grid').innerHTML = NVC_NEEDS.map(n =>
+    '<div class="need-card"><div class="nc-label">'+n.label+'</div><div class="nc-desc">'+n.desc+'</div></div>'
+  ).join('');
+})();
+
+function openNeedsGuide()         { document.getElementById('needs-modal').style.display = 'flex'; }
+function closeNeedsGuide(evt) {
+  if (!evt || evt.target === document.getElementById('needs-modal'))
+    document.getElementById('needs-modal').style.display = 'none';
+}
+
+// ─── RENDER CATEGORY NAV ────────────────────────────────────────────────────
+function renderCatNav() {
+  const cats = Object.keys(DATA);
+  document.getElementById('cat-nav-inner').innerHTML = cats.map(cat => {
+    const pct = completionPct(cat);
+    const badge = pct > 0
+      ? '<span class="badge'+(pct===100?' complete':'')+'">' + pct + '%</span>'
+      : '';
+    return '<button class="cat-btn'+(cat===activeCategory?' active':'')
+      +'" onclick="switchCat(\''+cat.replace(/'/g,"\\'")+'\')">'
+      + DATA[cat].icon + ' ' + cat + badge + '</button>';
+  }).join('');
+}
+
+function switchCat(cat) {
+  activeCategory = cat;
+  activeFilter   = 'All';
+  renderCatNav();
+  renderMain();
+}
+
+// ─── RENDER MAIN ────────────────────────────────────────────────────────────
+function renderMain() {
+  const cat  = DATA[activeCategory];
+  const groups = groupItems(cat.items);
+  const groupNames = Object.keys(groups);
+
+  // description
+  document.getElementById('desc-card').textContent = cat.description;
+
+  // filter pills (only if >1 group)
+  const filterEl = document.getElementById('filter-row');
+  if (groupNames.length > 1) {
+    const pills = ['All', ...groupNames];
+    filterEl.innerHTML = pills.map(g =>
+      '<button class="filter-pill'+(activeFilter===g?' active':'')+'" onclick="setFilter(\''+g.replace(/'/g,"\\'")+'\')">' + g + '</button>'
+    ).join('');
+  } else {
+    filterEl.innerHTML = '';
+  }
+
+  // legend
+  document.getElementById('legend-bar').innerHTML =
+    '<span class="lbl">LIMIT:</span> ' +
+    LIMITS.map(l => '<span class="lc" style="color:' + getComputedLimitColor(l.cls) + '">' + l.label + '</span>').join(' ') +
+    ' <span class="lc" style="color:#14B8A6;margin-left:8px">💚 Need = what this meets in you</span>' +
+    ' <span style="margin-left:8px">' + RATINGS.map(r => r.emoji+'='+r.value).join(' ') + '</span>';
+
+  // items
+  const filtered = activeFilter === 'All' ? groups : { [activeFilter]: groups[activeFilter] };
+  let html = '';
+  Object.entries(filtered).forEach(([group, gItems]) => {
+    html += '<div class="group-heading">' + group + '</div>';
+    gItems.forEach(item => {
+      html += renderItemCard(activeCategory, item.idx, item.name);
+    });
+  });
+  document.getElementById('items-container').innerHTML = html;
+  attachCardListeners();
+}
+
+function getComputedLimitColor(cls) {
+  const map = { hard:'#EF4444', soft:'#F97316', cur:'#0891B2', enj:'#14B8A6', fav:'#F472B6' };
+  return map[cls] || '#000';
+}
+
+function setFilter(g) {
+  activeFilter = g;
+  renderMain();
+}
+
+// ─── RENDER A SINGLE ITEM CARD ──────────────────────────────────────────────
+function renderItemCard(cat, idx, name) {
+  const key = cat + '||' + idx;
+  const s   = selections[key] || emptyEntry();
+  const touched = s.experience || s.rating != null || s.limit || s.fetish || s.need;
+  const borderCls = touched
+    ? (s.limit ? ' style="border-color:'+getComputedLimitColor(limitCls(s.limit))+'"' : '')
+    : '';
+
+  // Experience chips
+  const expChips = EXPERIENCE.map(e =>
+    '<button class="chip exp'+(s.experience===e?' on':'')+'" data-field="experience" data-value="'+e+'">'+e+'</button>'
+  ).join('');
+
+  // Rating buttons
+  const ratingBtns = RATINGS.map(r =>
+    '<button class="rating-btn'+(s.rating===r.value?' on':'')+'" data-field="rating" data-value="'+r.value+'" title="'+r.label+'">'+r.emoji+'</button>'
+  ).join('');
+
+  // Limit chips
+  const limitChips = LIMITS.map(l =>
+    '<button class="chip limit '+l.cls+(s.limit===l.label?' on':'')+'" data-field="limit" data-value="'+l.label+'">'+l.label+'</button>'
+  ).join('');
+
+  // Need chips
+  const needChips = NVC_NEEDS.map(n =>
+    '<button class="chip need'+(s.need===n.label?' on':'')+'" data-field="need" data-value="'+n.label+'">'+n.label+'</button>'
+  ).join('');
+
+  // Revisit info
+  const lastRevisit = s.revisitDates.length > 0
+    ? 'Last revisited: ' + s.revisitDates[s.revisitDates.length-1]
+    : '';
+
+  return `
+  <div class="item-card${touched?' touched':''}" ${borderCls} data-key="${key}">
+    <div class="card-top">
+      <span class="item-name">${name}</span>
+      <button class="fetish-btn${s.fetish?' on':''}" data-field="fetish">✦ Fetish</button>
+    </div>
+    <div class="card-row">
+      <div style="flex:1 1 160px">
+        <div class="lbl-sm">Experience</div>
+        <div class="chip-strip">${expChips}</div>
+      </div>
+      <div>
+        <div class="lbl-sm">Rating</div>
+        <div class="rating-strip">${ratingBtns}</div>
+      </div>
+    </div>
+    <div class="card-row">
+      <div>
+        <div class="lbl-sm">Limit</div>
+        <div class="chip-strip">${limitChips}</div>
+      </div>
+    </div>
+    <div class="card-row">
+      <div>
+        <div class="lbl-sm need">What need does this meet?</div>
+        <div class="chip-strip">${needChips}</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div style="flex:1 1 200px">
+        <button class="notes-toggle" data-notes-toggle>+ Add a note</button>
+        <input class="notes-input" style="display:none" data-notes-input
+          placeholder="Your private thoughts..." value="${s.notes.replace(/"/g,'&quot;')}">
+      </div>
+      <div class="revisit-area">
+        <div class="revisit-date">${lastRevisit}</div>
+        <button class="revisit-btn" data-revisit>📅 Mark Revisited</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ─── ATTACH CARD EVENT LISTENERS ────────────────────────────────────────────
+function attachCardListeners() {
+  document.querySelectorAll('.item-card').forEach(card => {
+    const key = card.dataset.key;
+
+    // chip / rating / limit / need toggle
+    card.querySelectorAll('[data-field]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const field = btn.dataset.field;
+        const value = btn.dataset.value;
+
+        if (field === 'fetish') {
+          selections[key].fetish = !selections[key].fetish;
+        } else if (field === 'rating') {
+          const num = parseInt(value);
+          selections[key].rating = selections[key].rating === num ? null : num;
+        } else {
+          // toggle off if same, else set
+          selections[key][field] = selections[key][field] === value ? null : value;
+        }
+        save();
+        renderMain(); // re-render to reflect changes
+      });
+    });
+
+    // notes toggle
+    const notesToggle = card.querySelector('[data-notes-toggle]');
+    const notesInput  = card.querySelector('[data-notes-input]');
+    if (notesToggle && notesInput) {
+      notesToggle.addEventListener('click', () => {
+        const visible = notesInput.style.display !== 'none';
+        notesInput.style.display = visible ? 'none' : 'block';
+        notesToggle.textContent  = visible ? '+ Add a note' : 'Hide notes';
+        if (!visible) notesInput.focus();
+      });
+      notesInput.addEventListener('input', () => {
+        selections[key].notes = notesInput.value;
+        save();
+      });
+    }
+
+    // revisit
+    const revisitBtn = card.querySelector('[data-revisit]');
+    if (revisitBtn) {
+      revisitBtn.addEventListener('click', () => {
+        const today = new Date().toISOString().slice(0,10);
+        selections[key].revisitDates.push(today);
+        save();
+        renderMain();
+      });
+    }
+  });
+}
+
+// ─── PRINT VIEW ─────────────────────────────────────────────────────────────
+function renderPrint() {
+  // legend
+  document.getElementById('print-legend').innerHTML =
+    RATINGS.map(r => '<span>' + r.emoji + ' ' + r.value + ' = ' + r.label + '</span>').join('');
+
+  // body
+  let html = '';
+  Object.entries(DATA).forEach(([cat, {icon, items}]) => {
+    const groups = groupItems(items);
+    html += '<div class="print-card">';
+    html += '<div class="print-cat-header">' + icon + ' ' + cat + '</div>';
+    html += '<table class="print-table"><thead><tr>';
+    ['Activity','Exp.','Rating','Limit','Fetish','Need Met','Notes'].forEach(h => {
+      html += '<th>' + h + '</th>';
+    });
+    html += '</tr></thead><tbody>';
+    Object.entries(groups).forEach(([group, gItems]) => {
+      html += '<tr class="group-row"><td colspan="7">' + group + '</td></tr>';
+      gItems.forEach(item => {
+        const s = selections[cat+'||'+item.idx] || emptyEntry();
+        const rObj = RATINGS.find(r => r.value === s.rating);
+        html += '<tr>'
+          + '<td>' + item.name + '</td>'
+          + '<td>' + (s.experience||'') + '</td>'
+          + '<td>' + (rObj ? rObj.emoji+' '+rObj.value : '') + '</td>'
+          + '<td style="'+(s.limit?'color:'+getComputedLimitColor(limitCls(s.limit))+';font-weight:600':'')+'">'+( s.limit||'') + '</td>'
+          + '<td>' + (s.fetish ? '✓' : '') + '</td>'
+          + '<td class="need-cell">' + (s.need||'') + '</td>'
+          + '<td class="notes-cell">' + (s.notes||'') + '</td>'
+          + '</tr>';
+      });
+    });
+    html += '</tbody></table></div>';
+  });
+  document.getElementById('print-body').innerHTML = html;
+}
+
+// ─── INIT ───────────────────────────────────────────────────────────────────
+showIntroScreen();
+</script>
+</body>
+</html>
