@@ -1,0 +1,289 @@
+﻿# 🏷️ GitHub Labels Setup Guide
+
+**Project:** Kinksploration Checklist  
+**Purpose:** ADHD-friendly visual issue tracking
+
+---
+
+## 🎨 Complete Label System
+
+### How to Create Labels
+
+1. Go to **Issues** → **Labels**
+2. Click **"New label"**
+3. Copy the info below for each label
+4. Click **"Create label"**
+
+---
+
+## 📊 Labels by Category
+
+### 🔥 URGENCY (Color-Coded by Priority)
+
+| Label Name | Color Code | Description | When to Use |
+|------------|------------|-------------|-------------|
+| `🔴 DO NOW` | `#DC2626` (Red) | Critical - site broken, data loss | Site won't load, can't save data, completely broken |
+| `🟠 DO SOON` | `#EA580C` (Orange) | Important - major feature broken | Filter doesn't work, button missing, significant bug |
+| `🟡 DO LATER` | `#CA8A04` (Yellow) | Minor - works but annoying | Small visual bug, nice improvement, polish |
+| `🟢 IDEA` | `#16A34A` (Green) | Future consideration | Interesting ideas, maybe someday |
+
+---
+
+### 🏷️ TYPE (What Kind of Issue)
+
+| Label Name | Color Code | Description |
+|------------|------------|-------------|
+| `🐛 bug` | `#EF4444` (Bright Red) | Something isn't working |
+| `✨ enhancement` | `#3B82F6` (Blue) | New feature or improvement |
+| `📖 user-story` | `#8B5CF6` (Purple) | User story for planning |
+| `🧪 testing-needed` | `#EC4899` (Pink) | Needs to be tested |
+| `📝 documentation` | `#6B7280` (Gray) | Docs need updating |
+| `🎨 design` | `#06B6D4` (Cyan) | UI/UX improvements |
+| `♿ accessibility` | `#14B8A6` (Teal) | A11y improvements |
+
+---
+
+### 📱 PLATFORM (Where's the Issue)
+
+| Label Name | Color Code | Description |
+|------------|------------|-------------|
+| `💻 desktop` | `#64748B` (Slate) | Desktop-specific issue |
+| `📱 mobile` | `#64748B` (Slate) | Mobile-specific issue |
+| `🌐 browser-specific` | `#64748B` (Slate) | Only happens in certain browsers |
+
+---
+
+### 📦 VERSION (Release Planning)
+
+| Label Name | Color Code | Description |
+|------------|------------|-------------|
+| `v6.0` | `#10B981` (Emerald) | Current version issues |
+| `v7.0` | `#22C55E` (Green) | Planned for V7 |
+| `v8.0` | `#4ADE80` (Light Green) | Future version |
+| `backlog` | `#9CA3AF` (Cool Gray) | Not scheduled yet |
+
+---
+
+### ✅ STATUS (Issue State)
+
+| Label Name | Color Code | Description |
+|------------|------------|-------------|
+| `✅ done` | `#059669` (Dark Green) | Completed and closed |
+| `🚧 in-progress` | `#F59E0B` (Amber) | Currently working on it |
+| `⏸️ on-hold` | `#78716C` (Stone) | Paused for now |
+| `❓ needs-info` | `#A855F7` (Purple) | Need more details |
+| `🔍 investigating` | `#6366F1` (Indigo) | Looking into it |
+
+---
+
+### 🎯 EFFORT (How Big Is This)
+
+| Label Name | Color Code | Description |
+|------------|------------|-------------|
+| `🍃 quick-win` | `#84CC16` (Lime) | < 1 hour, easy fix |
+| `🔨 medium` | `#EAB308` (Yellow) | 2-4 hours work |
+| `🏔️ big-project` | `#DC2626` (Red) | Multiple days |
+
+---
+
+## 🎯 Quick Reference: Priority Combinations
+
+### Critical Bug (Do Immediately!)
+- `🔴 DO NOW`
+- `🐛 bug`
+- Priority: 1
+
+### Important Feature (This Week)
+- `🟠 DO SOON`
+- `✨ enhancement`
+- Priority: 2
+
+### Nice Improvement (When You Have Time)
+- `🟡 DO LATER`
+- `✨ enhancement`
+- Priority: 3
+
+### Future Idea (Backlog)
+- `🟢 IDEA`
+- `backlog`
+- Priority: 4
+
+---
+
+## 📋 Example Issue Labeling
+
+### Example 1: Rating Filter Bug
+**Labels:**
+- `🔴 DO NOW` (site feature broken)
+- `🐛 bug` (it's a bug)
+- `v6.0` (current version)
+- `💻 desktop` (all platforms)
+
+### Example 2: Print Modal Enhancement
+**Labels:**
+- `🟡 DO LATER` (nice to have)
+- `✨ enhancement` (new feature)
+- `v7.0` (planned for V7)
+- `🍃 quick-win` (not too hard)
+
+### Example 3: Mobile Layout Issue
+**Labels:**
+- `🟠 DO SOON` (annoying but not critical)
+- `🐛 bug` (something's wrong)
+- `📱 mobile` (mobile only)
+- `🎨 design` (layout issue)
+
+---
+
+## 🔍 How to Find Issues by Priority
+
+### Show Only Critical Issues:
+Filter: `label:"🔴 DO NOW"`
+
+### Show Current Version Bugs:
+Filter: `label:"🐛 bug" label:"v6.0"`
+
+### Show Quick Wins:
+Filter: `label:"🍃 quick-win" label:"🟡 DO LATER"`
+
+### Show V7 Features:
+Filter: `label:"v7.0" label:"✨ enhancement"`
+
+---
+
+## 🎨 Visual Priority System
+
+When you look at your issues list, you'll instantly see:
+- **Red** = Drop everything, fix now
+- **Orange** = Important, schedule soon
+- **Yellow** = Eventually, when free
+- **Green** = Ideas for later
+
+The emoji also help you scan quickly!
+
+---
+
+## 🧠 ADHD-Friendly Workflow
+
+### Morning Review:
+1. Open Issues
+2. Filter: `label:"🔴 DO NOW"`
+3. Any red? Do those first
+4. No red? Check orange `label:"🟠 DO SOON"`
+
+### Planning V7:
+1. Filter: `label:"v7.0"`
+2. See everything planned
+3. Pick what to work on
+
+### Quick Wins Day:
+1. Filter: `label:"🍃 quick-win" label:"🟡 DO LATER"`
+2. Knock out easy stuff
+3. Feels productive!
+
+---
+
+## 📊 Recommended Starting Labels (Minimal Set)
+
+If you don't want to create ALL labels right away, start with these 10:
+
+**Must Have:**
+1. `🔴 DO NOW` - Critical
+2. `🟠 DO SOON` - Important
+3. `🟡 DO LATER` - Minor
+4. `🟢 IDEA` - Future
+5. `🐛 bug` - Bugs
+6. `✨ enhancement` - Features
+7. `v6.0` - Current version
+8. `v7.0` - Next version
+9. `📱 mobile` - Mobile issues
+10. `🍃 quick-win` - Easy fixes
+
+Add others as you need them!
+
+---
+
+## 🎯 Creating Your First 10 Labels
+
+Copy this into a text file for quick reference:
+
+```
+Label: 🔴 DO NOW
+Color: DC2626
+Description: Critical - site broken, fix immediately
+
+Label: 🟠 DO SOON  
+Color: EA580C
+Description: Important - major feature broken
+
+Label: 🟡 DO LATER
+Color: CA8A04
+Description: Minor - works but annoying
+
+Label: 🟢 IDEA
+Color: 16A34A
+Description: Future consideration
+
+Label: 🐛 bug
+Color: EF4444
+Description: Something isn't working
+
+Label: ✨ enhancement
+Color: 3B82F6
+Description: New feature or improvement
+
+Label: v6.0
+Color: 10B981
+Description: Current version issues
+
+Label: v7.0
+Color: 22C55E
+Description: Planned for V7
+
+Label: 📱 mobile
+Color: 64748B
+Description: Mobile-specific issue
+
+Label: 🍃 quick-win
+Color: 84CC16
+Description: Easy fix, less than 1 hour
+```
+
+---
+
+## 🎨 Color Reference (Hex Codes)
+
+| Color | Hex Code | Use For |
+|-------|----------|---------|
+| Red | `#DC2626` | Critical/Stop |
+| Orange | `#EA580C` | Important |
+| Yellow | `#CA8A04` | Minor |
+| Green | `#16A34A` | Ideas/Done |
+| Blue | `#3B82F6` | Features |
+| Purple | `#8B5CF6` | Stories |
+| Pink | `#EC4899` | Testing |
+| Gray | `#6B7280` | Docs |
+
+---
+
+## 💡 Pro Tips
+
+1. **Don't over-label** - Pick 2-3 labels per issue max
+2. **Always include urgency** - Red/Orange/Yellow/Green
+3. **Always include type** - Bug/Enhancement/etc
+4. **Add version** - So you know what release
+5. **Use filters** - Don't scroll through everything
+
+---
+
+## 🔗 Quick Links
+
+After creating labels, bookmark these filters:
+- Critical: `/issues?q=is%3Aissue+is%3Aopen+label%3A"🔴+DO+NOW"`
+- This Week: `/issues?q=is%3Aissue+is%3Aopen+label%3A"🟠+DO+SOON"`
+- V7 Planning: `/issues?q=is%3Aissue+is%3Aopen+label%3A"v7.0"`
+
+---
+
+**Next Step:** Create your first 10 labels, then start adding issues!
+
