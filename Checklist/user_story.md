@@ -1,0 +1,111 @@
+---
+name: User Story
+about: Define a user story for development
+title: '[STORY] '
+labels: user-story
+assignees: ''
+---
+
+## 📖 User Story
+
+**As a** [type of user]  
+**I want** [goal/desire]  
+**So that** [benefit/value]
+
+### Example:
+*As a* curious explorer  
+*I want* to filter by "Hard Limit" across all categories  
+*So that* I can quickly see all my boundaries in one place
+
+---
+
+## 🎯 Acceptance Criteria
+
+**Given** [context/precondition]  
+**When** [action/event]  
+**Then** [expected outcome]
+
+- [ ] Criterion 1
+- [ ] Criterion 2
+- [ ] Criterion 3
+
+### Example:
+- [ ] **Given** I'm in the ALL category view  
+      **When** I click the "Hard Limit" filter in the legend  
+      **Then** Only items marked as Hard Limit are displayed
+
+---
+
+## 💼 Business Value
+<!-- Why is this important? What value does it provide? -->
+
+**Priority:** 
+- [ ] High - Critical user need
+- [ ] Medium - Important enhancement
+- [ ] Low - Nice to have
+
+**User Impact:**
+- [ ] All users
+- [ ] Specific user type: _______________
+- [ ] Edge case
+
+---
+
+## 🔧 Technical Notes
+<!-- Any technical implementation details, dependencies, or constraints -->
+
+**Depends On:**
+- [ ] Issue #___
+- [ ] Feature: _______________
+
+**Affects:**
+- [ ] Data structure
+- [ ] UI components
+- [ ] Performance
+- [ ] Mobile experience
+
+---
+
+## 📋 Tasks
+<!-- Break down into concrete development tasks -->
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+- [ ] Write tests
+- [ ] Update documentation
+
+---
+
+## 🧪 Testing Scenarios
+<!-- How should this be tested? -->
+1. Test scenario 1
+2. Test scenario 2
+3. Edge cases to consider
+
+---
+
+## 📱 Responsive Design
+<!-- How should this work on different screen sizes? -->
+- [ ] Desktop (>1024px)
+- [ ] Tablet (768px-1024px)
+- [ ] Mobile (<768px)
+
+---
+
+## 📊 Definition of Done
+<!-- What needs to be true for this story to be considered complete? -->
+- [ ] Feature works as described
+- [ ] All acceptance criteria met
+- [ ] Tested on multiple browsers
+- [ ] Tested on mobile
+- [ ] No console errors
+- [ ] Code committed and pushed
+- [ ] Documentation updated (if needed)
+
+---
+
+## 🔗 Related
+<!-- Link related user stories, issues, or documentation -->
+- Related to: #___
+- Blocks: #___
+- Blocked by: #___

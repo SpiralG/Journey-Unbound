@@ -120,6 +120,7 @@ input  { font-family: inherit; }
 
 /* ─── STICKY LEGEND ────────────────────────────────────────────────── */
 #legend-sticky {
+  position: sticky; top: 96px; z-index: 80;
   background: #fff;
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
@@ -160,16 +161,6 @@ input  { font-family: inherit; }
   border-radius: 10px; padding: 2px 7px;
   font-size: 8.5px; color: var(--turquoise); font-weight: 600;
 }
-
-/* fetish filter in legend */
-.legend-fetish {
-  display: inline-flex; align-items: center; gap: 3px;
-  background: #f3f4f6; border-radius: 10px; padding: 2px 7px;
-  font-size: 8.5px; font-weight: 600; color: var(--pink);
-  transition: all 0.15s; cursor: pointer;
-}
-.legend-fetish:hover { background: #e5e7eb; }
-.legend-fetish.active { background: var(--pink); color: #fff; }
 
 /* ─── MAIN CONTENT ─────────────────────────────────────────────────── */
 #main {
@@ -629,46 +620,6 @@ const NVC_NEEDS = [
   {label:"Spirituality",  desc:"Transcendence, connection to something greater"},
 ];
 
-// Hard Limit needs - for boundaries
-const HARD_LIMIT_NEEDS = [
-  // Avoiding Harm (at top - visually distinct)
-  {label:"To not feel abandoned", desc:"Protection from emotional abandonment", category:"harm"},
-  {label:"To not feel betrayed", desc:"Protection from breach of trust", category:"harm"},
-  {label:"To not feel coerced", desc:"Protection from pressure or force", category:"harm"},
-  {label:"To not feel diminished", desc:"Protection from being made to feel small", category:"harm"},
-  {label:"To not feel disrespected", desc:"Protection from disrespect or contempt", category:"harm"},
-  {label:"To not feel manipulated", desc:"Protection from manipulation or deception", category:"harm"},
-  {label:"To not feel pressured", desc:"Protection from unwanted pressure", category:"harm"},
-  {label:"To not feel used", desc:"Protection from being exploited", category:"harm"},
-  {label:"To not feel violated", desc:"Protection from violation of boundaries", category:"harm"},
-  {label:"To not feel overwhelmed", desc:"Protection from being pushed too far", category:"harm"},
-  {label:"To not feel unsafe", desc:"Protection from physical or emotional danger", category:"harm"},
-  // Physical & Emotional Safety
-  {label:"Safety / Security", desc:"Feeling safe and secure", category:"safety"},
-  {label:"Protection", desc:"Being protected from harm", category:"safety"},
-  {label:"Well-Being", desc:"Overall health and wellness", category:"safety"},
-  {label:"Health / Balance", desc:"Physical and emotional balance", category:"safety"},
-  // Self-Respect & Dignity
-  {label:"Self-respect", desc:"Maintaining respect for yourself", category:"dignity"},
-  {label:"Self-Worth", desc:"Knowing your inherent value", category:"dignity"},
-  {label:"Integrity", desc:"Living in alignment with your values", category:"dignity"},
-  {label:"Authenticity", desc:"Being true to yourself", category:"dignity"},
-  // Autonomy & Boundaries
-  {label:"Autonomy", desc:"Self-determination and agency", category:"autonomy"},
-  {label:"Choice", desc:"Freedom to choose", category:"autonomy"},
-  {label:"Freedom", desc:"Liberty and independence", category:"autonomy"},
-  {label:"Independence", desc:"Self-sufficiency", category:"autonomy"},
-  {label:"Space", desc:"Room to breathe and be yourself", category:"autonomy"},
-  {label:"Privacy", desc:"Control over what is shared", category:"autonomy"},
-  // Trust & Stability
-  {label:"Trust", desc:"Trusting yourself and your judgment", category:"stability"},
-  {label:"Stability", desc:"Consistency and predictability", category:"stability"},
-  {label:"Order", desc:"Structure and organization", category:"stability"},
-  {label:"Clarity", desc:"Clear understanding", category:"stability"},
-  {label:"Peace", desc:"Inner calm and tranquility", category:"stability"},
-  {label:"Ease", desc:"Comfort and lack of strain", category:"stability"},
-];
-
 const RATINGS = [
   {value:0, label:"Not for Me", emoji:"🚫"},
   {value:1, label:"Not Yet",    emoji:"🌱"},
@@ -1104,15 +1055,14 @@ const DATA = {
 };
 
 // ─── STATE ──────────────────────────────────────────────────────────────────
-let mode = null;
-let activeCategory = 'ALL';
-let activeFilter = 'All';
-let ratingFilter = null;
-let limitFilter = null;
-let fetishFilter = false;
+let mode           = null;
+let activeCategory = Object.keys(DATA)[0];
+let activeFilter   = 'All';
+let ratingFilter   = null;
+let limitFilter    = null;
 let selections     = {};
 let searchOpen     = false;
-let allSort = 'category';
+let allSort        = 'alpha';
 let searchQuery    = '';
 
 function emptyEntry() {
@@ -1231,23 +1181,8 @@ function renderLegend() {
   h += '<div class="legend-divider"></div>';
   // Need
   h += '<div class="legend-need">💚 Need = what this meets in you</div>';
-  // divider
-  h += '<div class="legend-divider"></div>';
-  // Fetish filter
-  h += '<div class="legend-fetish'+(fetishFilter?' active':'')+'" onclick="toggleFetishFilter()">✦ Fetish</div>';
 
   document.getElementById('legend-inner').innerHTML = h;
-}
-
-
-function toggleFetishFilter() {
-  fetishFilter = !fetishFilter;
-  renderLegend();
-  if (activeCategory === 'ALL') {
-    renderAllItems();
-  } else {
-    renderMain();
-  }
 }
 
 function toggleRatingFilter(value) {
@@ -1264,39 +1199,13 @@ function toggleLimitFilter(label) {
 
 // ─── CATEGORY NAV ───────────────────────────────────────────────────────────
 function renderCatNav() {
-  let html = '';
-  // Add ALL category first
-  const allPct = Math.round((Object.values(selections).filter(s => s.experience || s.limit || s.rating != null).length / Object.values(selections).length) * 100);
-  const allBadge = allPct > 0 ? '<span class="badge'+(allPct===100?' complete':'')+'">' + allPct+'%</span>' : '';
-  html += '<button class="cat-btn'+(activeCategory==='ALL'?' active':'')+'" onclick="switchCat(\'ALL\')">📋 ALL' + allBadge + '</button>';
-  
-  // Add regular categories
-  html += Object.keys(DATA).map(cat => {
+  document.getElementById('cat-nav-inner').innerHTML = Object.keys(DATA).map(cat => {
     const pct = completionPct(cat);
     const badge = pct>0 ? '<span class="badge'+(pct===100?' complete':'')+'">' +pct+'%</span>' : '';
     return '<button class="cat-btn'+(cat===activeCategory?' active':'')+'" onclick="switchCat(\''+cat.replace(/'/g,"\\'")+'\')">' +DATA[cat].icon+' '+cat+badge+'</button>';
   }).join('');
-  
-  document.getElementById('cat-nav-inner').innerHTML = html;
 }
-function switchCat(cat){ 
-  activeCategory=cat; 
-  activeFilter='All'; 
-  ratingFilter=null; 
-  limitFilter=null; 
-  fetishFilter=false;
-  renderCatNav(); 
-  renderLegend();
-  if (cat === 'ALL') {
-    document.getElementById('main').style.display='none';
-    document.getElementById('all-items-view').style.display='block';
-    renderAllItems();
-  } else {
-    document.getElementById('main').style.display='block';
-    document.getElementById('all-items-view').style.display='none';
-    renderMain();
-  }
-}
+function switchCat(cat){ activeCategory=cat; activeFilter='All'; ratingFilter=null; limitFilter=null; renderCatNav(); renderLegend(); renderMain(); }
 
 // ─── MAIN RENDER ────────────────────────────────────────────────────────────
 function renderMain() {
@@ -1321,14 +1230,13 @@ function renderMain() {
   Object.entries(filtered).forEach(([group,gItems])=>{
     // Filter by rating and/or limit if active
     let displayItems = gItems;
-    if (ratingFilter !== null || limitFilter !== null || fetishFilter) {
+    if (ratingFilter !== null || limitFilter !== null) {
       displayItems = gItems.filter(item => {
         const key = activeCategory + '||' + item.idx;
         const s = selections[key] || emptyEntry();
         let matches = true;
         if (ratingFilter !== null && s.rating !== ratingFilter) matches = false;
         if (limitFilter !== null && s.limit !== limitFilter) matches = false;
-        if (fetishFilter && !s.fetish) matches = false;
         return matches;
       });
     }
@@ -1338,7 +1246,7 @@ function renderMain() {
       totalDisplayed += displayItems.length;
     }
   });
-  if (totalDisplayed === 0 && (ratingFilter !== null || limitFilter !== null || fetishFilter)) {
+  if (totalDisplayed === 0 && (ratingFilter !== null || limitFilter !== null)) {
     html = '<div style="text-align:center;padding:40px 20px;color:var(--muted);font-style:italic;">No items match the selected filters. Click the filter again to clear it.</div>';
   }
   document.getElementById('items-container').innerHTML = html;
@@ -1362,20 +1270,7 @@ function renderItemCard(cat, idx, name, showCatBadge) {
   const expChips = EXPERIENCE.map(e=>'<button class="chip exp'+(s.experience===e?' on':'')+'" data-field="experience" data-value="'+e+'">'+e+'</button>').join('');
   const ratingBtns = RATINGS.map(r=>'<button class="rating-btn'+(s.rating===r.value?' on':'')+'" data-field="rating" data-value="'+r.value+'" title="'+r.label+'">'+r.emoji+'</button>').join('');
   const limitChips = LIMITS.map(l=>'<button class="chip limit '+l.cls+(s.limit===l.label?' on':'')+'" data-field="limit" data-value="'+l.label+'">'+l.label+'</button>').join('');
-  // Choose needs list and label based on limit type
-  let needsList = NVC_NEEDS;
-  let needsLabel = 'What need does this meet?';
-  
-  if (s.limit === 'Hard Limit') {
-    needsList = HARD_LIMIT_NEEDS;
-    needsLabel = 'What need does honoring this boundary meet?';
-  } else if (s.limit === 'Soft Limit') {
-    // Soft limits get BOTH lists
-    needsList = [...HARD_LIMIT_NEEDS, ...NVC_NEEDS];
-    needsLabel = 'What needs does this boundary serve? What might I explore?';
-  }
-  
-  const needChips = needsList.map(n=>'<button class="chip need'+(needs.includes(n.label)?' on':'')+'" data-field="need" data-value="'+n.label+'">'+n.label+'</button>').join('');
+  const needChips = NVC_NEEDS.map(n=>'<button class="chip need'+(needs.includes(n.label)?' on':'')+'" data-field="need" data-value="'+n.label+'">'+n.label+'</button>').join('');
   const lastRevisit = s.revisitDates.length>0 ? 'Last revisited: '+s.revisitDates[s.revisitDates.length-1] : '';
 
   return `<div class="item-card${touched?' touched':''}" ${borderStyle} data-key="${key}">
@@ -1388,7 +1283,7 @@ function renderItemCard(cat, idx, name, showCatBadge) {
       <div><div class="lbl-sm">Rating</div><div class="rating-strip">${ratingBtns}</div></div>
     </div>
     <div class="card-row"><div><div class="lbl-sm">Limit</div><div class="chip-strip">${limitChips}</div></div></div>
-    <div class="card-row"><div><div class="lbl-sm need">${needsLabel}</div><div class="chip-strip">${needChips}</div></div></div>
+    <div class="card-row"><div><div class="lbl-sm need">What need does this meet?</div><div class="chip-strip">${needChips}</div></div></div>
     <div class="card-footer">
       <div style="flex:1 1 200px">
         <button class="notes-toggle" data-notes-toggle>+ Add a note</button>
@@ -1429,12 +1324,7 @@ function attachCardListeners() {
           else selections[key].needs.push(value);
         }
         else selections[key][field]=selections[key][field]===value?null:value;
-        save(); 
-        if (activeCategory === 'ALL') {
-          renderAllItems();
-        } else {
-          renderMain();
-        }
+        save(); renderMain();
       });
     });
     const nt=card.querySelector('[data-notes-toggle]'), ni=card.querySelector('[data-notes-input]');
@@ -1443,15 +1333,7 @@ function attachCardListeners() {
       ni.addEventListener('input',()=>{ selections[key].notes=ni.value; save(); });
     }
     const rb=card.querySelector('[data-revisit]');
-    if(rb) rb.addEventListener('click',()=>{ 
-      selections[key].revisitDates.push(new Date().toISOString().slice(0,10)); 
-      save(); 
-      if (activeCategory === 'ALL') {
-        renderAllItems();
-      } else {
-        renderMain();
-      }
-    });
+    if(rb) rb.addEventListener('click',()=>{ selections[key].revisitDates.push(new Date().toISOString().slice(0,10)); save(); renderMain(); });
   });
 }
 
@@ -1547,19 +1429,7 @@ function renderAllItems() {
     // Simple stemming: remove common suffixes to catch variations
     const stem = (word) => {
       return word.replace(/(?:ing|ed|s|er|ly)$/, '');
-    }
-
-  // Apply rating, limit, and fetish filters
-  if (ratingFilter !== null || limitFilter !== null || fetishFilter) {
-    items = items.filter(item => {
-      const s = selections[item.key] || emptyEntry();
-      let matches = true;
-      if (ratingFilter !== null && s.rating !== ratingFilter) matches = false;
-      if (limitFilter !== null && s.limit !== limitFilter) matches = false;
-      if (fetishFilter && !s.fetish) matches = false;
-      return matches;
-    });
-  };
+    };
     const qStem = stem(q);
     
     items = items.filter(item => {

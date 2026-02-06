@@ -120,6 +120,7 @@ input  { font-family: inherit; }
 
 /* ─── STICKY LEGEND ────────────────────────────────────────────────── */
 #legend-sticky {
+  position: sticky; top: 96px; z-index: 80;
   background: #fff;
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
@@ -137,21 +138,10 @@ input  { font-family: inherit; }
   display: inline-flex; align-items: center; gap: 3px;
   background: #f3f4f6; border-radius: 5px; padding: 2px 5px;
   font-size: 9px; color: var(--muted);
-  transition: all 0.15s;
 }
-.legend-rating:hover { background: #e5e7eb; }
-.legend-rating.active { background: var(--purple); color: #fff; font-weight: 600; }
-.legend-rating.active .r-emoji { filter: brightness(1.2); }
 .legend-rating .r-emoji { font-size: 11px; line-height: 1; }
 /* limit swatch in legend */
-.legend-limit { 
-  display: inline-flex; align-items: center; gap: 3px; 
-  font-size: 8.5px; font-weight: 600;
-  padding: 2px 5px; border-radius: 5px;
-  transition: all 0.15s;
-}
-.legend-limit:hover { background: #f3f4f6; }
-.legend-limit.active { background: var(--purple); color: #fff; }
+.legend-limit { display: inline-flex; align-items: center; gap: 3px; font-size: 8.5px; font-weight: 600; }
 .legend-limit .swatch { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
 /* need tag in legend */
 .legend-need {
@@ -160,16 +150,6 @@ input  { font-family: inherit; }
   border-radius: 10px; padding: 2px 7px;
   font-size: 8.5px; color: var(--turquoise); font-weight: 600;
 }
-
-/* fetish filter in legend */
-.legend-fetish {
-  display: inline-flex; align-items: center; gap: 3px;
-  background: #f3f4f6; border-radius: 10px; padding: 2px 7px;
-  font-size: 8.5px; font-weight: 600; color: var(--pink);
-  transition: all 0.15s; cursor: pointer;
-}
-.legend-fetish:hover { background: #e5e7eb; }
-.legend-fetish.active { background: var(--pink); color: #fff; }
 
 /* ─── MAIN CONTENT ─────────────────────────────────────────────────── */
 #main {
@@ -215,14 +195,14 @@ input  { font-family: inherit; }
   background: var(--deep-blue); color: #fff; font-size: 11px; line-height: 1.5;
   padding: 8px 11px; border-radius: 7px; max-width: 260px; width: max-content;
   z-index: 50; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  pointer-events: none;
+  pointer-events: auto;
 }
 .tooltip::before {
   content: ''; position: absolute; top: -5px; left: 16px;
   width: 10px; height: 10px; background: var(--deep-blue);
   transform: rotate(45deg);
 }
-.item-name-wrap:hover .tooltip { display: block; }
+.item-name.has-tip.show-tip + .tooltip { display: block; }
 /* keep tooltip on screen if near right edge */
 @media (max-width: 500px) { .tooltip { max-width: 200px; } }
 
@@ -238,7 +218,7 @@ input  { font-family: inherit; }
   letter-spacing: 0.8px; margin-bottom: 3px; font-weight: 600;
 }
 .lbl-sm.need { color: var(--turquoise); }
-.chip-strip { display: flex; gap: 4px; flex-wrap: wrap; max-height: 120px; overflow-y: auto; }
+.chip-strip { display: flex; gap: 4px; flex-wrap: wrap; }
 .chip { border-radius: 5px; padding: 3px 9px; font-size: 9px; transition: all 0.15s; border: none; }
 .chip.exp    { background: #f3f4f6; color: var(--muted); }
 .chip.exp.on { background: var(--peacock); color: #fff; font-weight: 600; }
@@ -397,7 +377,7 @@ input  { font-family: inherit; }
         <div class="legend-title">How the ratings work</div>
         <div class="legend-body" id="intro-legend-body"></div>
       </div>
-      <p class="intro-blessing">💜 There are no wrong answers. This journey is yours. Find Your Path.</p>
+      <p class="intro-blessing">💜 There are no wrong answers. This journey is yours. Embrace your power.</p>
     </div>
     <div class="mode-label">How would you like to explore?</div>
     <div class="mode-buttons">
@@ -446,7 +426,7 @@ input  { font-family: inherit; }
   <div class="desc-card" id="desc-card"></div>
   <div class="filter-row" id="filter-row"></div>
   <div id="items-container"></div>
-  <div class="blessing">💜 Love Yourself, Your Journey Is Precious, Find Your Path</div>
+  <div class="blessing">💜 Love Yourself, Your Journey Is Precious, Embrace Your Power</div>
 </div>
 
 <div id="all-items-view" style="display:none">
@@ -484,7 +464,7 @@ input  { font-family: inherit; }
   </div>
   <div class="print-legend" id="print-legend"></div>
   <div id="print-body"></div>
-  <div class="print-blessing">💜 Love Yourself, Your Journey Is Precious, Find Your Path</div>
+  <div class="print-blessing">💜 Love Yourself, Your Journey Is Precious, Embrace Your Power</div>
 </div>
 
 <!-- ═══ JS ══════════════════════════════════════════════════════════════════ -->
@@ -597,76 +577,6 @@ const NVC_NEEDS = [
   {label:"Presence",      desc:"Being fully in the moment, mindfulness, stillness"},
   {label:"Vulnerability", desc:"Opening up, being raw and real, emotional risk"},
   {label:"Purpose",       desc:"Feeling like this journey means something deeper"},
-  {label:"Empathy",       desc:"Being understood, feeling someone truly gets you"},
-  {label:"Challenge",     desc:"Testing yourself, growth through difficulty"},
-  {label:"Order",         desc:"Structure, clarity, knowing what to expect"},
-  {label:"Peace",         desc:"Calm, harmony, emotional balance"},
-  {label:"Stimulation",   desc:"Intensity, arousal, being fully engaged"},
-  {label:"Beauty",        desc:"Aesthetics, artistry, experiencing something sublime"},
-  {label:"Competence",    desc:"Skill, mastery, knowing you can do this well"},
-  {label:"Creativity",    desc:"Innovation, imagination, making something new"},
-  {label:"Discovery",     desc:"Learning, curiosity, finding out what's possible"},
-  {label:"Growth",        desc:"Evolution, development, becoming more"},
-  {label:"Hope",          desc:"Optimism, possibility, believing in what could be"},
-  {label:"Inspiration",   desc:"Being moved, motivated, feeling called to something"},
-  {label:"Intimacy",      desc:"Deep knowing, profound closeness, soul connection"},
-  {label:"Love",          desc:"Affection, care, deep emotional bond"},
-  {label:"Meaning",       desc:"Significance, understanding why this matters"},
-  {label:"Mourning",      desc:"Grieving, releasing, honoring what's being let go"},
-  {label:"Mutuality",     desc:"Reciprocity, balance, equal exchange"},
-  {label:"Spontaneity",   desc:"Improvisation, flow, freedom from planning"},
-  {label:"Stability",     desc:"Consistency, predictability, solid ground"},
-  {label:"To understand", desc:"Clarity, comprehension, making sense of experience"},
-  {label:"Celebration",   desc:"Joy, honoring achievement, marking moments"},
-  {label:"Awareness",     desc:"Consciousness, attention, being awake to experience"},
-  {label:"Clarity",       desc:"Understanding, knowing what's true, seeing clearly"},
-  {label:"Contribution",  desc:"Giving, serving, making a difference"},
-  {label:"Effectiveness", desc:"Impact, getting results, making things happen"},
-  {label:"Equality",      desc:"Fairness, balance, mutual respect"},
-  {label:"Harmony",       desc:"Flow, alignment, things working together"},
-  {label:"Integrity",     desc:"Wholeness, honesty, being true to yourself"},
-  {label:"Self-Worth",    desc:"Value, dignity, knowing you matter"},
-  {label:"Spirituality",  desc:"Transcendence, connection to something greater"},
-];
-
-// Hard Limit needs - for boundaries
-const HARD_LIMIT_NEEDS = [
-  // Avoiding Harm (at top - visually distinct)
-  {label:"To not feel abandoned", desc:"Protection from emotional abandonment", category:"harm"},
-  {label:"To not feel betrayed", desc:"Protection from breach of trust", category:"harm"},
-  {label:"To not feel coerced", desc:"Protection from pressure or force", category:"harm"},
-  {label:"To not feel diminished", desc:"Protection from being made to feel small", category:"harm"},
-  {label:"To not feel disrespected", desc:"Protection from disrespect or contempt", category:"harm"},
-  {label:"To not feel manipulated", desc:"Protection from manipulation or deception", category:"harm"},
-  {label:"To not feel pressured", desc:"Protection from unwanted pressure", category:"harm"},
-  {label:"To not feel used", desc:"Protection from being exploited", category:"harm"},
-  {label:"To not feel violated", desc:"Protection from violation of boundaries", category:"harm"},
-  {label:"To not feel overwhelmed", desc:"Protection from being pushed too far", category:"harm"},
-  {label:"To not feel unsafe", desc:"Protection from physical or emotional danger", category:"harm"},
-  // Physical & Emotional Safety
-  {label:"Safety / Security", desc:"Feeling safe and secure", category:"safety"},
-  {label:"Protection", desc:"Being protected from harm", category:"safety"},
-  {label:"Well-Being", desc:"Overall health and wellness", category:"safety"},
-  {label:"Health / Balance", desc:"Physical and emotional balance", category:"safety"},
-  // Self-Respect & Dignity
-  {label:"Self-respect", desc:"Maintaining respect for yourself", category:"dignity"},
-  {label:"Self-Worth", desc:"Knowing your inherent value", category:"dignity"},
-  {label:"Integrity", desc:"Living in alignment with your values", category:"dignity"},
-  {label:"Authenticity", desc:"Being true to yourself", category:"dignity"},
-  // Autonomy & Boundaries
-  {label:"Autonomy", desc:"Self-determination and agency", category:"autonomy"},
-  {label:"Choice", desc:"Freedom to choose", category:"autonomy"},
-  {label:"Freedom", desc:"Liberty and independence", category:"autonomy"},
-  {label:"Independence", desc:"Self-sufficiency", category:"autonomy"},
-  {label:"Space", desc:"Room to breathe and be yourself", category:"autonomy"},
-  {label:"Privacy", desc:"Control over what is shared", category:"autonomy"},
-  // Trust & Stability
-  {label:"Trust", desc:"Trusting yourself and your judgment", category:"stability"},
-  {label:"Stability", desc:"Consistency and predictability", category:"stability"},
-  {label:"Order", desc:"Structure and organization", category:"stability"},
-  {label:"Clarity", desc:"Clear understanding", category:"stability"},
-  {label:"Peace", desc:"Inner calm and tranquility", category:"stability"},
-  {label:"Ease", desc:"Comfort and lack of strain", category:"stability"},
 ];
 
 const RATINGS = [
@@ -1104,19 +1014,16 @@ const DATA = {
 };
 
 // ─── STATE ──────────────────────────────────────────────────────────────────
-let mode = null;
-let activeCategory = 'ALL';
-let activeFilter = 'All';
-let ratingFilter = null;
-let limitFilter = null;
-let fetishFilter = false;
+let mode           = null;
+let activeCategory = Object.keys(DATA)[0];
+let activeFilter   = 'All';
 let selections     = {};
 let searchOpen     = false;
-let allSort = 'category';
+let allSort        = 'alpha';
 let searchQuery    = '';
 
 function emptyEntry() {
-  return {experience:null, rating:null, limit:null, fetish:false, needs:[], notes:'', revisitDates:[]};
+  return {experience:null, rating:null, limit:null, fetish:false, need:null, notes:'', revisitDates:[]};
 }
 function buildDefaults() {
   const s = {};
@@ -1137,24 +1044,7 @@ function completionPct(cat) {
 function limitCls(label) { const found=LIMITS.find(l=>l.label===label); return found?found.cls:''; }
 function getLimitColor(cls) { return {hard:'#EF4444',soft:'#F97316',cur:'#0891B2',enj:'#14B8A6',fav:'#F472B6'}[cls]||'#000'; }
 function save() { if(mode==='profile') try{localStorage.setItem('ju_checklist',JSON.stringify(selections));}catch(e){} }
-function load() { 
-  try{ 
-    const r=localStorage.getItem('ju_checklist'); 
-    if(r){
-      selections=JSON.parse(r);
-      // Migrate old format (need) to new format (needs)
-      Object.keys(selections).forEach(key => {
-        if(selections[key].need && !selections[key].needs) {
-          selections[key].needs = [selections[key].need];
-          delete selections[key].need;
-        }
-        if(!selections[key].needs) selections[key].needs = [];
-      });
-      return;
-    } 
-  }catch(e){} 
-  selections=buildDefaults(); 
-}
+function load() { try{ const r=localStorage.getItem('ju_checklist'); if(r){selections=JSON.parse(r);return;} }catch(e){} selections=buildDefaults(); }
 
 // ─── SCREENS ────────────────────────────────────────────────────────────────
 function showIntroScreen() {
@@ -1219,84 +1109,31 @@ function renderLegend() {
   let h = '';
   // Ratings
   h += '<div class="legend-section"><span class="legend-lbl">Rating</span>';
-  h += RATINGS.map(r=>'<span class="legend-rating'+(ratingFilter===r.value?' active':'')+'" onclick="toggleRatingFilter('+r.value+')" style="cursor:pointer"><span class="r-emoji">'+r.emoji+'</span><span class="r-label">'+r.label+'</span></span>').join('');
+  h += RATINGS.map(r=>'<span class="legend-rating"><span class="r-emoji">'+r.emoji+'</span><span class="r-label">'+r.label+'</span></span>').join('');
   h += '</div>';
   // divider
   h += '<div class="legend-divider"></div>';
   // Limits
   h += '<div class="legend-section"><span class="legend-lbl">Limit</span>';
-  h += LIMITS.map(l=>'<span class="legend-limit'+(limitFilter===l.label?' active':'')+'" onclick="toggleLimitFilter(\''+l.label.replace(/'/g,"\\'")+'\')" style="cursor:pointer"><span class="swatch" style="background:'+getLimitColor(l.cls)+'"></span>'+l.label+'</span>').join('');
+  h += LIMITS.map(l=>'<span class="legend-limit"><span class="swatch" style="background:'+getLimitColor(l.cls)+'"></span>'+l.label+'</span>').join('');
   h += '</div>';
   // divider
   h += '<div class="legend-divider"></div>';
   // Need
   h += '<div class="legend-need">💚 Need = what this meets in you</div>';
-  // divider
-  h += '<div class="legend-divider"></div>';
-  // Fetish filter
-  h += '<div class="legend-fetish'+(fetishFilter?' active':'')+'" onclick="toggleFetishFilter()">✦ Fetish</div>';
 
   document.getElementById('legend-inner').innerHTML = h;
 }
 
-
-function toggleFetishFilter() {
-  fetishFilter = !fetishFilter;
-  renderLegend();
-  if (activeCategory === 'ALL') {
-    renderAllItems();
-  } else {
-    renderMain();
-  }
-}
-
-function toggleRatingFilter(value) {
-  ratingFilter = ratingFilter === value ? null : value;
-  renderLegend();
-  renderMain();
-}
-
-function toggleLimitFilter(label) {
-  limitFilter = limitFilter === label ? null : label;
-  renderLegend();
-  renderMain();
-}
-
 // ─── CATEGORY NAV ───────────────────────────────────────────────────────────
 function renderCatNav() {
-  let html = '';
-  // Add ALL category first
-  const allPct = Math.round((Object.values(selections).filter(s => s.experience || s.limit || s.rating != null).length / Object.values(selections).length) * 100);
-  const allBadge = allPct > 0 ? '<span class="badge'+(allPct===100?' complete':'')+'">' + allPct+'%</span>' : '';
-  html += '<button class="cat-btn'+(activeCategory==='ALL'?' active':'')+'" onclick="switchCat(\'ALL\')">📋 ALL' + allBadge + '</button>';
-  
-  // Add regular categories
-  html += Object.keys(DATA).map(cat => {
+  document.getElementById('cat-nav-inner').innerHTML = Object.keys(DATA).map(cat => {
     const pct = completionPct(cat);
     const badge = pct>0 ? '<span class="badge'+(pct===100?' complete':'')+'">' +pct+'%</span>' : '';
     return '<button class="cat-btn'+(cat===activeCategory?' active':'')+'" onclick="switchCat(\''+cat.replace(/'/g,"\\'")+'\')">' +DATA[cat].icon+' '+cat+badge+'</button>';
   }).join('');
-  
-  document.getElementById('cat-nav-inner').innerHTML = html;
 }
-function switchCat(cat){ 
-  activeCategory=cat; 
-  activeFilter='All'; 
-  ratingFilter=null; 
-  limitFilter=null; 
-  fetishFilter=false;
-  renderCatNav(); 
-  renderLegend();
-  if (cat === 'ALL') {
-    document.getElementById('main').style.display='none';
-    document.getElementById('all-items-view').style.display='block';
-    renderAllItems();
-  } else {
-    document.getElementById('main').style.display='block';
-    document.getElementById('all-items-view').style.display='none';
-    renderMain();
-  }
-}
+function switchCat(cat){ activeCategory=cat; activeFilter='All'; renderCatNav(); renderMain(); }
 
 // ─── MAIN RENDER ────────────────────────────────────────────────────────────
 function renderMain() {
@@ -1317,30 +1154,10 @@ function renderMain() {
   // items
   const filtered = activeFilter==='All' ? groups : {[activeFilter]:groups[activeFilter]};
   let html='';
-  let totalDisplayed = 0;
   Object.entries(filtered).forEach(([group,gItems])=>{
-    // Filter by rating and/or limit if active
-    let displayItems = gItems;
-    if (ratingFilter !== null || limitFilter !== null || fetishFilter) {
-      displayItems = gItems.filter(item => {
-        const key = activeCategory + '||' + item.idx;
-        const s = selections[key] || emptyEntry();
-        let matches = true;
-        if (ratingFilter !== null && s.rating !== ratingFilter) matches = false;
-        if (limitFilter !== null && s.limit !== limitFilter) matches = false;
-        if (fetishFilter && !s.fetish) matches = false;
-        return matches;
-      });
-    }
-    if (displayItems.length > 0) {
-      html += '<div class="group-heading">'+group+'</div>';
-      displayItems.forEach(item=>{ html += renderItemCard(activeCategory, item.idx, item.name); });
-      totalDisplayed += displayItems.length;
-    }
+    html += '<div class="group-heading">'+group+'</div>';
+    gItems.forEach(item=>{ html += renderItemCard(activeCategory, item.idx, item.name); });
   });
-  if (totalDisplayed === 0 && (ratingFilter !== null || limitFilter !== null || fetishFilter)) {
-    html = '<div style="text-align:center;padding:40px 20px;color:var(--muted);font-style:italic;">No items match the selected filters. Click the filter again to clear it.</div>';
-  }
   document.getElementById('items-container').innerHTML = html;
   attachCardListeners();
 }
@@ -1352,30 +1169,16 @@ function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace
 function renderItemCard(cat, idx, name, showCatBadge) {
   const key = cat+'||'+idx;
   const s   = selections[key] || emptyEntry();
-  const needs = s.needs || []; // Handle both old (need) and new (needs) format
-  const touched = s.experience||s.rating!=null||s.limit||s.fetish||needs.length>0;
+  const touched = s.experience||s.rating!=null||s.limit||s.fetish||s.need;
   const borderStyle = touched && s.limit ? ' style="border-color:'+getLimitColor(limitCls(s.limit))+'"' : '';
   const tip = TIPS[name];
   const tipHtml = tip ? '<span class="tooltip">'+escHtml(tip)+'</span>' : '';
-  const nameHtml = '<span class="item-name'+(tip?' has-tip':'')+'">'+escHtml(name)+'</span>' + (showCatBadge ? '<span class="cat-badge">'+escHtml(cat)+'</span>' : '');
+  const nameHtml = '<span class="item-name'+(tip?' has-tip':'')+'" '+(tip?'title="Hover for info"':'')+'>'+escHtml(name)+'</span>' + (showCatBadge ? '<span class="cat-badge">'+escHtml(cat)+'</span>' : '');
 
   const expChips = EXPERIENCE.map(e=>'<button class="chip exp'+(s.experience===e?' on':'')+'" data-field="experience" data-value="'+e+'">'+e+'</button>').join('');
   const ratingBtns = RATINGS.map(r=>'<button class="rating-btn'+(s.rating===r.value?' on':'')+'" data-field="rating" data-value="'+r.value+'" title="'+r.label+'">'+r.emoji+'</button>').join('');
   const limitChips = LIMITS.map(l=>'<button class="chip limit '+l.cls+(s.limit===l.label?' on':'')+'" data-field="limit" data-value="'+l.label+'">'+l.label+'</button>').join('');
-  // Choose needs list and label based on limit type
-  let needsList = NVC_NEEDS;
-  let needsLabel = 'What need does this meet?';
-  
-  if (s.limit === 'Hard Limit') {
-    needsList = HARD_LIMIT_NEEDS;
-    needsLabel = 'What need does honoring this boundary meet?';
-  } else if (s.limit === 'Soft Limit') {
-    // Soft limits get BOTH lists
-    needsList = [...HARD_LIMIT_NEEDS, ...NVC_NEEDS];
-    needsLabel = 'What needs does this boundary serve? What might I explore?';
-  }
-  
-  const needChips = needsList.map(n=>'<button class="chip need'+(needs.includes(n.label)?' on':'')+'" data-field="need" data-value="'+n.label+'">'+n.label+'</button>').join('');
+  const needChips = NVC_NEEDS.map(n=>'<button class="chip need'+(s.need===n.label?' on':'')+'" data-field="need" data-value="'+n.label+'">'+n.label+'</button>').join('');
   const lastRevisit = s.revisitDates.length>0 ? 'Last revisited: '+s.revisitDates[s.revisitDates.length-1] : '';
 
   return `<div class="item-card${touched?' touched':''}" ${borderStyle} data-key="${key}">
@@ -1388,7 +1191,7 @@ function renderItemCard(cat, idx, name, showCatBadge) {
       <div><div class="lbl-sm">Rating</div><div class="rating-strip">${ratingBtns}</div></div>
     </div>
     <div class="card-row"><div><div class="lbl-sm">Limit</div><div class="chip-strip">${limitChips}</div></div></div>
-    <div class="card-row"><div><div class="lbl-sm need">${needsLabel}</div><div class="chip-strip">${needChips}</div></div></div>
+    <div class="card-row"><div><div class="lbl-sm need">What need does this meet?</div><div class="chip-strip">${needChips}</div></div></div>
     <div class="card-footer">
       <div style="flex:1 1 200px">
         <button class="notes-toggle" data-notes-toggle>+ Add a note</button>
@@ -1414,6 +1217,24 @@ function attachCardListeners() {
     });
   });
 
+  // Tooltip click handlers
+  document.querySelectorAll('.item-name.has-tip').forEach(tip => {
+    tip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Close all other tooltips
+      document.querySelectorAll('.item-name.has-tip').forEach(t => t.classList.remove('show-tip'));
+      // Toggle this one
+      tip.classList.toggle('show-tip');
+    });
+  });
+  
+  // Close tooltips when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.item-name-wrap')) {
+      document.querySelectorAll('.item-name.has-tip').forEach(t => t.classList.remove('show-tip'));
+    }
+  });
+
   document.querySelectorAll('.item-card').forEach(card => {
     const key = card.dataset.key;
     card.querySelectorAll('[data-field]').forEach(btn => {
@@ -1421,20 +1242,8 @@ function attachCardListeners() {
         const field=btn.dataset.field, value=btn.dataset.value;
         if(field==='fetish') selections[key].fetish=!selections[key].fetish;
         else if(field==='rating'){ const n=parseInt(value); selections[key].rating=selections[key].rating===n?null:n; }
-        else if(field==='need') {
-          // Multi-select for needs
-          if(!selections[key].needs) selections[key].needs = [];
-          const idx = selections[key].needs.indexOf(value);
-          if(idx > -1) selections[key].needs.splice(idx, 1);
-          else selections[key].needs.push(value);
-        }
         else selections[key][field]=selections[key][field]===value?null:value;
-        save(); 
-        if (activeCategory === 'ALL') {
-          renderAllItems();
-        } else {
-          renderMain();
-        }
+        save(); renderMain();
       });
     });
     const nt=card.querySelector('[data-notes-toggle]'), ni=card.querySelector('[data-notes-input]');
@@ -1443,15 +1252,7 @@ function attachCardListeners() {
       ni.addEventListener('input',()=>{ selections[key].notes=ni.value; save(); });
     }
     const rb=card.querySelector('[data-revisit]');
-    if(rb) rb.addEventListener('click',()=>{ 
-      selections[key].revisitDates.push(new Date().toISOString().slice(0,10)); 
-      save(); 
-      if (activeCategory === 'ALL') {
-        renderAllItems();
-      } else {
-        renderMain();
-      }
-    });
+    if(rb) rb.addEventListener('click',()=>{ selections[key].revisitDates.push(new Date().toISOString().slice(0,10)); save(); renderMain(); });
   });
 }
 
@@ -1470,8 +1271,7 @@ function renderPrint() {
       gItems.forEach(item=>{
         const s=selections[cat+'||'+item.idx]||emptyEntry();
         const rObj=RATINGS.find(r=>r.value===s.rating);
-        const needs = (s.needs && s.needs.length > 0) ? s.needs.join(', ') : '';
-        html+='<tr><td>'+escHtml(item.name)+'</td><td>'+(s.experience||'')+'</td><td>'+(rObj?rObj.emoji+' '+rObj.value:'')+'</td><td style="'+(s.limit?'color:'+getLimitColor(limitCls(s.limit))+';font-weight:600':'')+'">'+(s.limit||'')+'</td><td>'+(s.fetish?'✓':'')+'</td><td class="need-cell">'+needs+'</td><td class="notes-cell">'+(escHtml(s.notes)||'')+'</td></tr>';
+        html+='<tr><td>'+escHtml(item.name)+'</td><td>'+(s.experience||'')+'</td><td>'+(rObj?rObj.emoji+' '+rObj.value:'')+'</td><td style="'+(s.limit?'color:'+getLimitColor(limitCls(s.limit))+';font-weight:600':'')+'">'+(s.limit||'')+'</td><td>'+(s.fetish?'✓':'')+'</td><td class="need-cell">'+(s.need||'')+'</td><td class="notes-cell">'+(escHtml(s.notes)||'')+'</td></tr>';
       });
     });
     html+='</tbody></table></div>';
@@ -1547,19 +1347,7 @@ function renderAllItems() {
     // Simple stemming: remove common suffixes to catch variations
     const stem = (word) => {
       return word.replace(/(?:ing|ed|s|er|ly)$/, '');
-    }
-
-  // Apply rating, limit, and fetish filters
-  if (ratingFilter !== null || limitFilter !== null || fetishFilter) {
-    items = items.filter(item => {
-      const s = selections[item.key] || emptyEntry();
-      let matches = true;
-      if (ratingFilter !== null && s.rating !== ratingFilter) matches = false;
-      if (limitFilter !== null && s.limit !== limitFilter) matches = false;
-      if (fetishFilter && !s.fetish) matches = false;
-      return matches;
-    });
-  };
+    };
     const qStem = stem(q);
     
     items = items.filter(item => {
